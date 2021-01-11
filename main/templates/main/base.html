@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}HomePage{% endblock %}</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="HomePageDesign.css">
+        {% block csslink %}
+        {% endblock %}
+    </head>
+
+    <body>
+        <div class="mainWindow" style="color:black;">
+
+            <div id="TopBar">
+                <div id="BarRight">
+                    <button class="buttons" id="SignOutButton">Sign Out</button>
+                    <a href="https://www.patesgs.org/"><img id="logo" alt="Pate's Logo" src="schoolLogo.png" width="50px" height="50px"></a>
+                </div>
+
+                <div id="BarLeft">
+                    <a href= "HomePage.html">
+                        <button class="buttons" id="Home">Home</button>
+                    </a>
+                    <a href="AddNewPrac.html">
+                        <button class="buttons" id="Add">Add Practical</button>
+                    </a>
+                    <a href="EditButton.html">
+                        <button class="buttons" id="Edit">Edit Practical</button>
+                    </a>
+                    <a href="ReportButton.html">
+                        <button class="buttons" id="Report">Loss/Break</button>
+                    </a>
+                    <a href= "AddtoInventory.html">
+                        <button class="buttons" id="Inventory">Add to Inv</button>
+                    </a>
+                    </div>
+            </div>
+
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
