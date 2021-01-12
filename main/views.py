@@ -8,3 +8,5 @@ def homepage(response):
 def report_loss(response):
     return render(response, 'main/LossOrBreakReport.html', {})
     
+def add_to_inventory(response):
+    return render(response, 'main/AddToInventory.html', {})

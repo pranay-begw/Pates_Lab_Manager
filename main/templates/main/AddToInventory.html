@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+<html>
+    <head>
+        {% block title %}Add to Inventory{% endblock %}
+        <link rel="stylesheet" href="{% static 'css/HomePageDesign.css' %}">
+        <link rel="stylesheet" href="{% static 'css/AddToInventoryDesign.css' %}">
+    </head>
+
+    <body>
+        {% block content %}
+            <div class = "FormForAdding"> <!-- Splitting the row above into columns, this one is for taking input-->
+                <form action="#" method="POST"> <!-- Add backend link to python file to connect all inputs to the backend -->
+                    <label for='Equipment Name'> Select Equipment</label>
+                        <select name="name" type="text" placeholder="Select Equipment">
+                            <option value='Equipment 1'>Equipment 1</option>
+                            <option value='Equipment 2'>Equipment 2</option>
+                            <option value='Equipment 3'>Equipment 3</option>
+                            <option value='Equipment 4'>Equipment 4</option>
+                            <option value='Equipment 5'>Equipment 5</option>
+                        </select> <!-- Replace with sqlite link -->
+                    
+                    <h3>OR</h3>   
+                        
+                    <p> New Equipment Name
+                        <input name="Equipment_name" type="text" placeholder="Enter Name of New Equipment"> <!-- Change to drop down menu -->
+                    </p>
+
+                    <p> No. of Additions
+                        <input name="Qty_Add" type="text" placeholder="Enter Added qty."> <!-- Change to drop down menu -->
+                    </p>
+
+                    <button class= "#" id="Send Request">Send Request</button>
+
+                </form>
+                <p>testing</p>
+            </div>
+        {% endblock %}
+    </body>
+</html>
