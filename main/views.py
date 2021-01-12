@@ -4,4 +4,7 @@ from django.http import HttpResponse
 
 def homepage(response):
     return render(response, 'main/HomePage.html', {})
+
+def report_loss(response):
+    return render(response, 'main/LossOrBreakageReport.html', {})
     
