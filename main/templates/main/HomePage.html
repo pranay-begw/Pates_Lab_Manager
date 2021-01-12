@@ -1,46 +1,55 @@
 {% extends 'main/base.html' %}
+{% load static %}
 
-{% block title %}HomePage{% endblock %}
-     
-    {% block content %}
-    <div class = "OrderEquipPage"> <!-- This is a row -->
+<html>
 
-        <div class = "TheForm"> <!-- Splitting the row above into columns, this one is for taking input-->
-            <form action="#" method="POST"> <!-- Add backend link to python file to connect all inputs to the backend -->
-                
-                <label for='Practical Name'> Select Practical Name</label>
-                <br>
-                    <select id="practical-selector" name="name" type="text" placeholder="Select Practical">
-                        <option value='Practical 1'>Practical 1</option>
-                        <option value='Practical 2'>Practical 2</option>
-                        <option value='Practical 3'>Practical 3</option>
-                        <option value='Practical 4'>Practical 4</option>
-                        <option value='Practical 5'>Practical 5</option>
-                    </select> <!-- Replace with sqlite link -->
+    <head>
+        {% block title %}HomePage{% endblock %}
+        <link rel="stylesheet" href="{% static 'css/HomePageDesign.css' %}">
+    </head>
 
-                <p> No. of Students <br>
-                    <input id="student-number-box" name="Select class/ No. of Students" type="text" placeholder="Enter Number"> <!-- Change to drop down menu -->
-                </p>
+    <body>  
+        {% block content %}
+            <div class = "OrderEquipPage"> <!-- This is a row -->
 
-                <label for='Room Number'> Select Room/Lab</label>
-                <br>
-                    <select id="room-number-box" name="name" type="text" placeholder="Select Room/Lab">
-                        <option value='Room 1'>Room 1</option>
-                        <option value='Room 2'>Room 2</option>
-                        <option value='Room 3'>Room 3</option>
-                        <option value='Room 4'>Room 4</option>
-                        <option value='Room 5'>Room 5</option>
-                    </select> <!-- Replace with sqlite link -->
-                <br>
-                <br>
-                <button class= "buttons" id="send-request">Send Request</button>
+                <div class = "TheForm"> <!-- Splitting the row above into columns, this one is for taking input-->
+                    <form action="#" method="POST"> <!-- Add backend link to python file to connect all inputs to the backend -->
+                        
+                        <label for='Practical Name'> Select Practical Name</label>
+                        <br>
+                            <select id="practical-selector" name="name" type="text" placeholder="Select Practical">
+                                <option value='Practical 1'>Practical 1</option>
+                                <option value='Practical 2'>Practical 2</option>
+                                <option value='Practical 3'>Practical 3</option>
+                                <option value='Practical 4'>Practical 4</option>
+                                <option value='Practical 5'>Practical 5</option>
+                            </select> <!-- Replace with sqlite link -->
 
-            </form>
-            <p>testing</p>
-        </div>
+                        <p> No. of Students <br>
+                            <input id="student-number-box" name="Select class/ No. of Students" type="text" placeholder="Enter Number"> <!-- Change to drop down menu -->
+                        </p>
 
-        <div class = "TheCalendar" unselectable="on"> <!-- Splitting the row above into columns, this one is for putting the calendar -->
-            <iframe id="calendar" src="https://tinyurl.com/yxf3v8pm" height="700" width="750"></iframe>
-        </div>
-    </div>
-    {% endblock %}
+                        <label for='Room Number'> Select Room/Lab</label>
+                        <br>
+                            <select id="room-number-box" name="name" type="text" placeholder="Select Room/Lab">
+                                <option value='Room 1'>Room 1</option>
+                                <option value='Room 2'>Room 2</option>
+                                <option value='Room 3'>Room 3</option>
+                                <option value='Room 4'>Room 4</option>
+                                <option value='Room 5'>Room 5</option>
+                            </select> <!-- Replace with sqlite link -->
+                        <br>
+                        <br>
+                        <button class= "buttons" id="send-request">Send Request</button>
+
+                    </form>
+                    <p>testing</p>
+                </div>
+
+                <div class = "TheCalendar" unselectable="on"> <!-- Splitting the row above into columns, this one is for putting the calendar -->
+                    <iframe id="calendar" src="https://tinyurl.com/yxf3v8pm" height="700" width="750"></iframe>
+                </div>
+            </div>
+        {% endblock %}
+    </body>
+</html>
