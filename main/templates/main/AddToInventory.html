@@ -20,7 +20,11 @@
                             <option value='Equipment 4'>Equipment 4</option>
                             <option value='Equipment 5'>Equipment 5</option>
                         </select> <!-- Replace with sqlite link -->
-                    
+
+                    <p> No. of Additions
+                        <input name="Qty_Add" type="text" placeholder="Enter Added qty."> <!-- Change to drop down menu -->
+                    </p>
+
                     <h3>OR</h3>   
                         
                     <p> New Equipment Name
@@ -28,7 +32,20 @@
                     </p>
 
                     <p> No. of Additions
-                        <input name="Qty_Add" type="text" placeholder="Enter Added qty."> <!-- Change to drop down menu -->
+                        <input name="Qty_Add" type="text" placeholder="Enter qty."> <!-- Change to drop down menu -->
+                    </p>
+                    
+                    <label for='Room Number'> Select Room/Lab</label>
+                        <select id="room-number" name="name" type="text" placeholder="Select Room/Lab">
+                            <option value='Room 1'>Room 1</option>
+                            <option value='Room 2'>Room 2</option>
+                            <option value='Room 3'>Room 3</option>
+                            <option value='Room 4'>Room 4</option>
+                            <option value='Room 5'>Room 5</option>
+                    </select> <!-- Replace with sqlite link -->
+
+                    <p> Image Reference
+                        <input name="img_url" type="image" placeholder="Enter Image for location">
                     </p>
 
                     <button class= "#" id="Send Request">Send Request</button>
