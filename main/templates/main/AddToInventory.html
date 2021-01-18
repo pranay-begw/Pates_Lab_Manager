@@ -4,7 +4,6 @@
 <html>
     <head>
         {% block title %}Add to Inventory{% endblock %}
-        <link rel="stylesheet" href="{% static 'css/HomePageDesign.css' %}">
         <link rel="stylesheet" href="{% static 'css/AddToInventoryDesign.css' %}">
     </head>
 
@@ -12,8 +11,9 @@
         {% block content %}
             <div class = "FormForAdding"> <!-- Splitting the row above into columns, this one is for taking input-->
                 <form action="#" method="POST"> <!-- Add backend link to python file to connect all inputs to the backend -->
+                    {% csrf_token %}
                     <label for='Equipment Name'> Select Equipment</label>
-                        <select name="name" type="text" placeholder="Select Equipment">
+                        <select id="equipment-name" name="name" type="text" placeholder="Select Equipment">
                             <option value='Equipment 1'>Equipment 1</option>
                             <option value='Equipment 2'>Equipment 2</option>
                             <option value='Equipment 3'>Equipment 3</option>
@@ -22,17 +22,17 @@
                         </select> <!-- Replace with sqlite link -->
 
                     <p> No. of Additions
-                        <input name="Qty_Add" type="text" placeholder="Enter Added qty."> <!-- Change to drop down menu -->
+                        <input id="qty-to-add" name="Qty_Add" type="text" placeholder="Enter Added qty."> <!-- Change to drop down menu -->
                     </p>
 
                     <h3>OR</h3>   
                         
                     <p> New Equipment Name
-                        <input name="Equipment_name" type="text" placeholder="Enter Name of New Equipment"> <!-- Change to drop down menu -->
+                        <input id="equipment-name" name="Equipment_name" type="text" placeholder="Enter Name of New Equipment"> <!-- Change to drop down menu -->
                     </p>
 
                     <p> No. of Additions
-                        <input name="Qty_Add" type="text" placeholder="Enter qty."> <!-- Change to drop down menu -->
+                        <input id="new-qty-to-add" name="Qty_Add" type="text" placeholder="Enter qty."> <!-- Change to drop down menu -->
                     </p>
                     
                     <label for='Room Number'> Select Room/Lab</label>
@@ -45,7 +45,7 @@
                     </select> <!-- Replace with sqlite link -->
 
                     <p> Image Reference
-                        <input name="img_url" type="image" placeholder="Enter Image for location">
+                        <input name="img_url" type="file" placeholder="Enter Image for location">
                     </p>
 
                     <button class= "#" id="Send Request">Send Request</button>
