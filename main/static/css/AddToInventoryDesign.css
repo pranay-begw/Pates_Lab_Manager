@@ -46,4 +46,41 @@
     padding-top: 20px;
     text-align: center;
     margin: 0 auto;
+    font-family: Arial;
+}
+
+.text-box{
+    width: 200px;
+    border-radius: 12px;
+    background-color: transparent;
+    height: 25px;
+    border-width: 1px;
+    border-color: black;
+    border-style: solid; 
+}
+
+#equipment-name{
+    width: 200px;
+    border-radius: 12px;
+    background-color: transparent;
+    height: 30px;
+    border-color: black;
+    border-style: solid; 
+}
+
+#room-number{
+    width: 200px;
+    border-radius: 12px;
+    background-color: transparent;
+    height: 30px;
+    border-color: black;
+    border-style: solid; 
+}
+
+#Send-Request{
+    border-radius: 12px;
+    width: 70px;
+    height: 35px;
+    font-size: 9px;
+    text-align: center;
 }

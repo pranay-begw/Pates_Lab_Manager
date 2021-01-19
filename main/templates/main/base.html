@@ -5,10 +5,11 @@
         <title>{% block title %}HomePage{% endblock %}</title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="{% static 'css/HomePageDesign.css' %}">
+        {% block extrahead %}{% endblock %}
     </head>
 
-    <body>
-        <div class="mainWindow" style="color:black;">
+    <body id="bg">
+        <div class="mainWindow" style="color:black;" >
 
             <div id="TopBar">
                 <div id="BarRight">

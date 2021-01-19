@@ -4,7 +4,9 @@
 <html>
     <head>
         {% block title %}Add to Inventory{% endblock %}
+        {% block extrahead %}
         <link rel="stylesheet" href="{% static 'css/AddToInventoryDesign.css' %}">
+        {% endblock %}
     </head>
 
     <body>
@@ -22,17 +24,17 @@
                         </select> <!-- Replace with sqlite link -->
 
                     <p> No. of Additions
-                        <input id="qty-to-add" name="Qty_Add" type="text" placeholder="Enter Added qty."> <!-- Change to drop down menu -->
+                        <input class="text-box" id="qty-to-add" name="Qty_Add" type="text" placeholder="Enter Added qty."> <!-- Change to drop down menu -->
                     </p>
 
                     <h3>OR</h3>   
                         
                     <p> New Equipment Name
-                        <input id="equipment-name" name="Equipment_name" type="text" placeholder="Enter Name of New Equipment"> <!-- Change to drop down menu -->
+                        <input class="text-box" id="equipment-name" name="Equipment_name" type="text" placeholder="Enter Name of New Equipment"> <!-- Change to drop down menu -->
                     </p>
 
                     <p> No. of Additions
-                        <input id="new-qty-to-add" name="Qty_Add" type="text" placeholder="Enter qty."> <!-- Change to drop down menu -->
+                        <input class="text-box" id="new-qty-to-add" name="Qty_Add" type="text" placeholder="Enter qty."> <!-- Change to drop down menu -->
                     </p>
                     
                     <label for='Room Number'> Select Room/Lab</label>
@@ -48,7 +50,7 @@
                         <input name="img_url" type="file" placeholder="Enter Image for location">
                     </p>
 
-                    <button class= "#" id="Send Request">Send Request</button>
+                    <button class= "#" id="Send-Request">Send Request</button>
 
                 </form>
                 <p>testing</p>

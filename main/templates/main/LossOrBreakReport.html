@@ -5,7 +5,9 @@
     <head>
         {% block title %}Loss or Breakage Report{% endblock %}
        <!--<link rel="stylesheet" href="{% static 'css/HomePageDesign.css' %}">-->
-        <link rel="stylesheet" href="{% static 'css/LossOrBreakageDesign.css' %}">
+       {% block extrahead %} 
+       <link rel="stylesheet" href="{% static 'css/LossOrBreakageDesign.css' %}">
+       {% endblock %}
     </head>
 
     <body>  
@@ -25,7 +27,7 @@
                         <input id="qty-loss" name="Qty_loss" type="text" placeholder="Enter Lost qty."> <!-- Change to drop down menu -->
                     </p>
 
-                    <button class= "#" id="send-request">Send Request</button>
+                    <button class= "#" id="send-request-ii">Send Request</button>
 
                 </form>
                 <p>testing</p>
