@@ -45,5 +45,33 @@
 .FormForReporting{
     padding-top: 20px;
     text-align: center;
-    margin: 0 auto;
+    margin: auto;
+    font-family: Arial;
+}
+
+#equipment-name{
+    width: 200px;
+    border-radius: 12px;
+    background-color: transparent;
+    height: 30px;
+    border-color: black;
+    border-style: solid;   
+}
+
+#qty-loss{
+    width: 200px;
+    border-radius: 12px;
+    background-color: transparent;
+    height: 25px;
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+}
+
+#send-request-ii{
+    border-radius: 12px;
+    width: 70px;
+    height: 35px;
+    font-size: 9px;
+    text-align: center;
 }
