@@ -17,7 +17,7 @@
                         
                         <label for='Practical Name'> Select Practical Name</label>
                         <br>
-                            <select id="practical-selector" name="name" type="text" placeholder="Select Practical">
+                            <select class="large-drop-downs" id="practical-selector" name="name" type="text" placeholder="Select Practical">
                                 <option value='Practical 1'>Practical 1</option>
                                 <option value='Practical 2'>Practical 2</option>
                                 <option value='Practical 3'>Practical 3</option>
@@ -31,7 +31,7 @@
 
                         <label for='Room Number'> Select Room/Lab</label>
                         <br>
-                            <select id="room-number-box" name="name" type="text" placeholder="Select Room/Lab">
+                            <select class="small-drop-downs" id="room-number-box" name="name" type="text" placeholder="Select Room/Lab">
                                 <option value='Room 1'>Room 1</option>
                                 <option value='Room 2'>Room 2</option>
                                 <option value='Room 3'>Room 3</option>
@@ -40,6 +40,21 @@
                             </select> <!-- Replace with sqlite link -->
                         <br>
                         <br>
+                        <label for="Lesson Number">Lesson Number</label>
+                        <br>
+                            <select class="small-drop-downs" id="lesson-number-box" name="name" type="text" placeholder="Select Lesson">
+                                <option value='Lesson 1'>Lesson 1</option>
+                                <option value='Lesson 2'>Lesson 2</option>
+                                <option value='Lesson 3'>Lesson 3</option>
+                                <option value='Lesson 4'>Lesson 4</option>
+                                <option value='Lesson 5'>Lesson 5</option>
+                            </select> <!-- Replace with sqlite link -->
+                        <br>
+
+                        <p> No. of Students <br>
+                            <input id="student-number-box" name="Select date" type="date" placeholder="Enter Date"> <!-- Change to drop down menu -->
+                        </p>
+
                         <button class= "buttons" id="send-request">Send Request</button>
 
                     </form>
