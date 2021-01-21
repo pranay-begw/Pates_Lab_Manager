@@ -90,7 +90,7 @@
     border-style: solid;
 }
 
-.TheCalendar{
+#TheCalendar{
     padding: 3%;
     margin: auto;
     display: inline-block;
@@ -101,6 +101,9 @@
 #calendar{
     border-radius: 12px;
     border-color: grey;
+    width: 60vw;
+    height: 100vh;
+    position: relative;
 }
 
 #send-request{
