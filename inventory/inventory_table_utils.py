@@ -1,1 +1,0 @@
-# this file will have all procedures and functions for maintaining the inventory table
