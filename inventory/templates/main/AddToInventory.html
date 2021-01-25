@@ -12,7 +12,7 @@
     <body>
         {% block content %}
             <div class = "FormForAdding"> <!-- Splitting the row above into columns, this one is for taking input-->
-                <form action="#" method="POST"> <!-- Add backend link to python file to connect all inputs to the backend -->
+                <form action="/AddInventory/" method="POST" enctype='multipart/form-data'> <!-- Add backend link to python file to connect all inputs to the backend, the ACTION contains the page url to GO TO one submitted correctly -->
                     {% csrf_token %}
                     <label for='Equipment Name'> Select Equipment</label>
                         <select id="equipment-name" name="name" type="text" placeholder="Select Equipment">
@@ -29,16 +29,21 @@
 
                     <h3>OR</h3>   
                         
-                    <p> New Equipment Name
-                        <input class="text-box" id="equipment-name" name="Equipment_name" type="text" placeholder="Enter Name of New Equipment"> <!-- Change to drop down menu -->
+                    <p> ID {{forms.id}}
+                        <input class="text-box" name="id" type="text" placeholder="Enter ID">
                     </p>
 
-                    <p> No. of Additions
-                        <input class="text-box" id="new-qty-to-add" name="Qty_Add" type="text" placeholder="Enter qty."> <!-- Change to drop down menu -->
+                    <p> New Equipment Name {{forms.name}}
+                        <input class="text-box" id="equipment-name" name="name" type="text" placeholder="Enter Name of New Equipment"> <!-- Change to drop down menu -->
+                    </p>
+
+                    <p> No. of Additions {{forms.total_quantity}}
+                        <input class="text-box" id="new-qty-to-add" name="total_quantity" type="text" placeholder="Enter qty."> <!-- Change to drop down menu -->
                     </p>
                     
                     <label for='Room Number'> Select Room/Lab</label>
-                        <select id="room-number" name="name" type="text" placeholder="Select Room/Lab">
+                        {{forms.location}
+                        <select id="room-number" name="location" type="text" placeholder="Select Room/Lab">
                             <option value='Room 1'>Room 1</option>
                             <option value='Room 2'>Room 2</option>
                             <option value='Room 3'>Room 3</option>
@@ -46,11 +51,11 @@
                             <option value='Room 5'>Room 5</option>
                     </select> <!-- Replace with sqlite link -->
 
-                    <p> Image Reference
-                        <input name="img_url" type="file" placeholder="Enter Image for location">
+                    <p> Image Reference {{forms.img_reference}}
+                        <input name="img_reference" type="file" placeholder="Enter Image for location">
                     </p>
 
-                    <button class= "#" id="Send-Request">Send Request</button>
+                    <button name="save" type="submit" class= "#" id="Send-Request">Send Request</button>
 
                 </form>
                 <p>testing</p>
