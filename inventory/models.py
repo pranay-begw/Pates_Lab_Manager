@@ -11,11 +11,12 @@ Room_Num = (
 #blank = True : Not Required
 #null = True : Stores some value as NULL if left empty
 
+
+# the count of the field below must be equal to the count of columns in db table - therefore deleting quantity_ne
 class Inventory_Equipment(models.Model):
     id = models.IntegerField(primary_key=True, null=False, default=0)
-    name = models.CharField(max_length=255, null=False, default="Name this Equipment")
-    total_quantity = models.IntegerField(null=False)
-    quantity_new = models.IntegerField(null=True)
+    name = models.CharField(max_length=255, null=False, default="Name this Equipment") # might have to divide this into name from frop down and new name
+    total_quantity = models.IntegerField(null=True) # qty to add an entirely new equipment - bottom of form
     location = models.CharField(max_length=20, default='Physics Office', choices=Room_Num)
     img_reference = models.ImageField(null=True, blank=True)
 
