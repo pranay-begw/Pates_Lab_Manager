@@ -12,7 +12,7 @@
     <body>
         {% block content %}
             <div class = "FormForAdding"> <!-- Splitting the row above into columns, this one is for taking input-->
-                <form action="/AddInventory/" method="POST" autocomplete="off"> <!-- Add backend link to python file to connect all inputs to the backend, the ACTION contains the page url to GO TO one submitted correctly -->
+                <form action="/AddInventory/" method="POST" autocomplete="off" enctype="multipart/form-data"> <!-- Add backend link to python file to connect all inputs to the backend, the ACTION contains the page url to GO TO one submitted correctly -->
                     {% csrf_token %}
                     <label for='Equipment Name'> Select Equipment</label>
                     {{forms.existing_name}} <!-- CHECK IF THIS WORKS -->
@@ -46,7 +46,7 @@
                     </p>
                     
                     <label for='Room Number'> Select Room/Lab</label>
-                        {{forms.location}
+                        {{forms.location}}
                         <select id="room-number" name="location" type="text" placeholder="Select Room/Lab">
                             <option value='Select' disabled="true">Select</option>
                             <option value='Room 1'>Room 1</option>

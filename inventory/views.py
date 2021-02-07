@@ -13,7 +13,7 @@ def report_loss(response):
 def add_new_to_inventory(request):
     practical_name = Inventory_Equipment.objects.all()
     if request.method == "POST":
-        form = Add_Inventory_Form(request.POST) #holds all the information from our form. When submit is clicked this gets a dictionary of all attributes and inputs, creates a new form with all values you entered.
+        form = Add_Inventory_Form(request.POST, request.FILES) #holds all the information from our form. When submit is clicked this gets a dictionary of all attributes and inputs, creates a new form with all values you entered.
         if form.is_valid():
             # NEED TO GET THESE LINES BELOW TO WORK
 
@@ -24,7 +24,6 @@ def add_new_to_inventory(request):
                 new_quantity = exisitng_quantity + form.cleaned_data.get("new_quantity")
                 Inventory_Equipment.objects.filter(name = practical_name_selected).values('total_quantity').update(total_quantity = new_quantity)
                 print (new_quantity)
-                # some error in the above lines is not adding the values = check
             form.save()
             return redirect('/AddInventory')
             # link to a page which shows the full table inventory
