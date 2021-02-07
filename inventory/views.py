@@ -36,6 +36,9 @@ def add_new_to_inventory(request):
     # in the above code, retrieve the record of dropdown selection and add the quantity_new value to exisitng qty 
 ####################################################################################################################################
 
+def view_inventory(request):
+    inventory_obj = Inventory_Equipment.objects.all()
+    return render(request,"main/ViewInventory.html", {'inventory_obj': inventory_obj})
 
 def add_new_practical(response):
     return render(response, 'main/AddNewPractical.html', {})
