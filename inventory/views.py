@@ -16,6 +16,7 @@ def add_new_to_inventory(request):
         form = Add_Inventory_Form(request.POST, request.FILES) #holds all the information from our form. When submit is clicked this gets a dictionary of all attributes and inputs, creates a new form with all values you entered.
         if form.is_valid():
             # NEED TO GET THESE LINES BELOW TO WORK
+            # CODE SUCH THAT THE FIRST PART OF THIS FORM IS NOT REQUIRED WHEN ADDIN TOTALLY NEW STUFF AND VICE VERSA
 
             if ( form.cleaned_data.get("new_quantity") != 0 ): # use is not null instead
                 practical_name_selected = form.cleaned_data.get("existing_name")
