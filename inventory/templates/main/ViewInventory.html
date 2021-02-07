@@ -4,7 +4,9 @@
 <html>
     <head>
         {% block title %}Inventory Table View{% endblock %}
-        <link rel="stylesheet" href="{% static 'css/HomePageDesign.css' %}">
+        {% block extrahead %}
+        <link rel="stylesheet" href="{% static 'css/ViewInventoryDesign.css' %}">
+        {% endblock %}
         <!-- Add link to its own css -->
     </head>
 
@@ -13,24 +15,24 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Equipment ID</th>  
-                        <th>Equipment Name</th>  
-                        <th>Total Quantity</th>
-                        <th>Location</th>
-                        <th>Image Reference</th>  
+                        <th class="tabled-headers">Equipment ID</th>  
+                        <th class="tabled-headers">Equipment Name</th>  
+                        <th class="tabled-headers">Total Quantity</th>
+                        <th class="tabled-headers">Location</th>
+                        <th class="tabled-headers">Image Reference</th>  
                     </tr>
                 </thead>
         
                 <tbody>
                     {% for equipment in inventory_obj %}
                         <tr>
-                            <td>{{ equipment.id }}</td>  
-                            <td>{{ equipment.name }}</td>  
-                            <td>{{ equipment.total_quantity }}</td> 
-                            <td>{{ equipment.location }}</td>
-                            <td>{{ equipment.img_reference }}</td>                                                        
-                            <td>
-                                <a href="/AddInventory/">Edit</a> 
+                            <td class="table-blocks">{{ equipment.id }}</td>  
+                            <td class="table-blocks">{{ equipment.name }}</td>  
+                            <td class="table-blocks">{{ equipment.total_quantity }}</td> 
+                            <td class="table-blocks">{{ equipment.location }}</td>
+                            <td class="table-blocks">{{ equipment.img_reference }}</td>                                                        
+                            <td class="table-blocks">
+                                <a href="/AddInventory/" id="Edit-Page-Link">Edit</a> 
                             </td>
                         </tr>
                     {% endfor%}
