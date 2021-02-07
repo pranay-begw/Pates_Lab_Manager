@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Inventory_Equipment
 from .forms import Add_Inventory_Form
@@ -15,11 +15,21 @@ def add_new_to_inventory(request):
     if request.method == "POST":
         form = Add_Inventory_Form(request.POST) #holds all the information from our form. When submit is clicked this gets a dictionary of all attributes and inputs, creates a new form with all values you entered.
         if form.is_valid():
+            # NEED TO GET THESE LINES BELOW TO WORK
+
+            if ( form.cleaned_data.get("new_quantity") != 0 ): # use is not null instead
+                practical_name_selected = form.cleaned_data.get("existing_name")
+                print(practical_name_selected)
+                exisitng_quantity = Inventory_Equipment.objects.filter(name = practical_name_selected).values('total_quantity')[0]['total_quantity']
+                new_quantity = exisitng_quantity + form.cleaned_data.get("new_quantity")
+                Inventory_Equipment.objects.filter(name = practical_name_selected).values('total_quantity').update(total_quantity = new_quantity)
+                print (new_quantity)
+                # some error in the above lines is not adding the values = check
             form.save()
+            return redirect('/AddInventory')
             # link to a page which shows the full table inventory
     else: #basically if method is GET
         form = Add_Inventory_Form()
-
     return render(request, 'main/AddToInventory.html', {'form': form, 'practical_names': practical_name})
 
 
