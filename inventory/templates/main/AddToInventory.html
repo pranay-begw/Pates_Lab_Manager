@@ -12,11 +12,11 @@
     <body>
         {% block content %}
             <div class = "FormForAdding"> <!-- Splitting the row above into columns, this one is for taking input-->
-                <form action="/AddInventory/" method="POST" enctype='multipart/form-data' autocomplete="off"> <!-- Add backend link to python file to connect all inputs to the backend, the ACTION contains the page url to GO TO one submitted correctly -->
+                <form action="/AddInventory/" method="POST" autocomplete="off"> <!-- Add backend link to python file to connect all inputs to the backend, the ACTION contains the page url to GO TO one submitted correctly -->
                     {% csrf_token %}
                     <label for='Equipment Name'> Select Equipment</label>
-                    {{forms.name}} <!-- CHECK IF THIS WORKS -->
-                        <select id="equipment-name" name="name" type="text" placeholder="Select Equipment">
+                    {{forms.existing_name}} <!-- CHECK IF THIS WORKS -->
+                        <select id="equipment-name" name="existing_name" type="text" placeholder="Select Equipment">
                             {% for practical_name in practical_names %}
                                 <option value="{{ practical_name.name }}">{{ practical_name.name }}</option>
                             {% endfor %}  
@@ -27,8 +27,8 @@
                             <option value='Equipment 5'>Equipment 5</option> -->
                         </select> <!-- Replace with sqlite link -->
 
-                    <p> No. of Additions {{ forms.quantity_new }}  <!-- Fix this in views.py/models.py-->
-                        <input class="text-box" id="qty-to-add" name="quantity_new" type="text" placeholder="Enter Added qty."> <!-- Change to drop down menu -->
+                    <p> No. of Additions {{ forms.new_quantity }}  <!-- Fix this in views.py/models.py-->
+                        <input class="text-box" id="qty-to-add" name="new_quantity" type="text" placeholder="Enter Added qty."> <!-- Change to drop down menu -->
                     </p>
 
                     <h3>OR</h3>   
@@ -48,6 +48,7 @@
                     <label for='Room Number'> Select Room/Lab</label>
                         {{forms.location}
                         <select id="room-number" name="location" type="text" placeholder="Select Room/Lab">
+                            <option value='Select' disabled="true">Select</option>
                             <option value='Room 1'>Room 1</option>
                             <option value='Room 2'>Room 2</option>
                             <option value='Room 3'>Room 3</option>
