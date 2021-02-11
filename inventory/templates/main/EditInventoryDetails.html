@@ -1,0 +1,34 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+<html>
+    <head>
+        {% block title %}Edit Inventory Items {% endblock %}
+        {% block extrahead %}
+        <link rel="stylesheet" href="{% static '' %}">
+        {% endblock %}
+        <!-- Add link to its own css -->
+    </head>
+
+    <body>
+        <!-- Change the fields into drop-down, file inputs, or textboxes respectively -->
+        {% block content %}
+            <form action="/Update/{{ inventory_obj.name }}" method="post" class="form-group">
+                {% csrf_token %}
+                <label for="name">Enter New Name: </label><br>
+                <input type="text" name="name" value= "{{ inventory_obj.name }}"><br>
+        
+                <label for="total_quantity">Enter New Quantity: </label><br>
+                <input type="text" name="total_quantity" value= "{{ inventory_obj.total_quantity }}"><br>
+
+                <label for="Room Number">Enter New Location: </label><br>
+                <input type="text" name="location" value= "{{ inventory_obj.location }}"><br>
+
+                <label for="img_reference">Enter New Image: </label><br>
+                <input type="text" name="img_reference" value= "{{ inventory_obj.img_reference }}"><br>
+                
+                <button name="save" type="submit" class="btn btn-success">Confirm</button>
+            </form>
+        {% endblock %}
+    </body>
+</html>
