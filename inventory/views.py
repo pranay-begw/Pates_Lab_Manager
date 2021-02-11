@@ -1,14 +1,27 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Inventory_Equipment
-from .forms import Add_Inventory_Form
+from .forms import Add_Inventory_Form, Remove_Inventory_Form
 # Create your views here.
 
 def homepage(response):
     return render(response, 'main/HomePage.html', {})
 
-def report_loss(response):
-    return render(response, 'main/LossOrBreakReport.html', {})
+def report_loss(request):
+    practical_name = Inventory_Equipment.objects.all()
+    if request.method == "POST":
+        form = Remove_Inventory_Form(request.POST) #holds all the information from our form. When submit is clicked this gets a dictionary of all attributes and inputs, creates a new form with all values you entered.
+        if form.is_valid():
+            if (form.cleaned_data.get("quantity_to_remove") is not None): # use is not null instead
+                practical_name_selected = form.cleaned_data.get("equipment_name")
+                exisitng_quantity = Inventory_Equipment.objects.filter(name = practical_name_selected).values('total_quantity')[0]['total_quantity']
+                new_quantity = exisitng_quantity - form.cleaned_data.get("quantity_to_remove")
+                Inventory_Equipment.objects.filter(name = practical_name_selected).values('total_quantity').update(total_quantity = new_quantity)
+            return redirect('/ViewInventory')
+            # link to a page which shows the full table inventory
+    else: #basically if method is GET
+        form = Remove_Inventory_Form()      
+    return render(request, 'main/LossOrBreakReport.html', {'form': form, 'practical_names': practical_name})
 
 def add_new_to_inventory(request):
     practical_name = Inventory_Equipment.objects.all()
