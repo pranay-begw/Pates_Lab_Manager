@@ -9,4 +9,6 @@ urlpatterns = [
      path("AddPractical/", views.add_new_practical, name="add_new_practical"),
      path("EditPractical/", views.edit_practical, name="edit_practical"),
      path("ViewInventory/", views.view_inventory, name="view_inventory"),
+     path("EditInventory/<str:name>", views.edit_inventory, name="edit_nventory"),
+     path("Update/<str:name>", views.update, name="update"),
 ]

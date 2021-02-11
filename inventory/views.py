@@ -43,6 +43,19 @@ def add_new_to_inventory(request):
 def view_inventory(request):
     inventory_obj = Inventory_Equipment.objects.all()
     return render(request,"main/ViewInventory.html", {'inventory_obj': inventory_obj})
+    
+def edit_inventory(request, name):
+    inventory_obj = Inventory_Equipment.objects.get(name = name)
+    return render(request,'main/EditInventoryDetails.html', {'inventory_obj': inventory_obj})
+
+# the file in this case is causing an issue in saving!
+def update(request, name):  
+    inventory_obj = Inventory_Equipment.objects.get(name = name)  
+    form = Add_Inventory_Form(request.POST, request.FILES, instance = inventory_obj)
+    if form.is_valid():
+        form.save()
+        return redirect("/ViewInventory")
+    return render(request, 'main/EditInventoryDetails.html', {'inventory_obj': inventory_obj})
 
 def add_new_practical(response):
     return render(response, 'main/AddNewPractical.html', {})
