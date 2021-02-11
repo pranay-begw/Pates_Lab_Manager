@@ -18,15 +18,18 @@ def add_new_to_inventory(request):
             # NEED TO GET THESE LINES BELOW TO WORK
             # CODE SUCH THAT THE FIRST PART OF THIS FORM IS NOT REQUIRED WHEN ADDIN TOTALLY NEW STUFF AND VICE VERSA
 
-            if ( form.cleaned_data.get("new_quantity") != 0 ): # use is not null instead
+            if (form.cleaned_data.get("new_quantity") is not None): # use is not null instead
                 practical_name_selected = form.cleaned_data.get("existing_name")
                 print(practical_name_selected)
                 exisitng_quantity = Inventory_Equipment.objects.filter(name = practical_name_selected).values('total_quantity')[0]['total_quantity']
+                print(exisitng_quantity)
                 new_quantity = exisitng_quantity + form.cleaned_data.get("new_quantity")
                 Inventory_Equipment.objects.filter(name = practical_name_selected).values('total_quantity').update(total_quantity = new_quantity)
                 print (new_quantity)
-            form.save()
-            return redirect('/AddInventory')
+            #add else here and check
+            else:
+                form.save()
+            return redirect('/ViewInventory')
             # link to a page which shows the full table inventory
     else: #basically if method is GET
         form = Add_Inventory_Form()
@@ -34,7 +37,7 @@ def add_new_to_inventory(request):
 
 
 ###################################################################################################################################
-    # in the above code, retrieve the record of dropdown selection and add the quantity_new value to exisitng qty 
+    # in the above code, make the form optional such that user ONLY fills either top half or bottom half of the form
 ####################################################################################################################################
 
 def view_inventory(request):
