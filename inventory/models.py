@@ -28,6 +28,8 @@ class Inventory_Equipment(models.Model):
     def __str__(self):
         return self.name
 
+    #add validation functions
+
 # Need to figure out auto increase id
 # Need to figure out image upload to db
 # Show table when changes made
