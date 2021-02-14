@@ -68,7 +68,7 @@ def update(request, name):
     if form.is_valid():
         form.save()
         return redirect("/ViewInventory")
-    return render(request, 'main/EditInventoryDetails.html', {'inventory_obj': inventory_obj})
+    return render(request, 'main/EditInventoryDetails.html', {'form': form, 'inventory_obj': inventory_obj })
 
 def add_new_practical(response):
     return render(response, 'main/AddNewPractical.html', {})
