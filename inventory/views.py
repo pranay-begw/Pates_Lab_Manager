@@ -65,7 +65,7 @@ def edit_inventory(request, id):
 def update(request, id):  
     inventory_obj = Inventory_Equipment.objects.get(id = id)  
     if (request.method == 'POST'):
-        form = Add_Inventory_Form(request.POST, request.FILES, instance = inventory_obj)
+        form = Add_Inventory_Form(request.POST or None, request.FILES or None, instance = inventory_obj)
         if form.is_valid():
             form.save()
         return redirect("/ViewInventory")
