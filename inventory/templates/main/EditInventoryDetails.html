@@ -13,19 +13,28 @@
     <body>
         <!-- Change the fields into drop-down, file inputs, or textboxes respectively -->
         {% block content %}
-            <form action="/Update/{{ inventory_obj.name }}" method="post" class="form-group">
+            <form action="/Update/{{ inventory_obj.name }}" method="post" class="form-group" enctype="multipart/form-data">
                 {% csrf_token %}
-                <label for="name">Enter New Name: </label><br>
+                <label for="name">Enter New Name: </label>{{ inventory_obj.name }}<br>
                 <input type="text" name="name" value= "{{ inventory_obj.name }}"><br>
         
-                <label for="total_quantity">Enter New Quantity: </label><br>
+                <label for="total_quantity">Enter New Quantity: </label>{{ inventory_obj.total_quantity }}<br>
                 <input type="text" name="total_quantity" value= "{{ inventory_obj.total_quantity }}"><br>
 
-                <label for="Room Number">Enter New Location: </label><br>
-                <input type="text" name="location" value= "{{ inventory_obj.location }}"><br>
+                <label for='Room Number'> Select Room/Lab</label>
+                    {{ inventory_obj.location }}
+                    <select id="room-number" name="location" type="text" placeholder="Select Room/Lab" value="{{ inventory_obj.location }}">
+                            <option value='Select' disabled="true">Select</option>
+                            <option value='Room 1'>Room 1</option>
+                            <option value='Room 2'>Room 2</option>
+                            <option value='Room 3'>Room 3</option>
+                            <option value='Room 4'>Room 4</option>
+                            <option value='Room 5'>Room 5</option>
+                    </select>
 
-                <label for="img_reference">Enter New Image: </label><br>
-                <input type="text" name="img_reference" value= "{{ inventory_obj.img_reference }}"><br>
+                    <p> Image Reference {{inventory_obj.img_reference}}
+                        <input name="img_reference" type="file" placeholder="Enter Image for location" value="{{inventory_obj.img_reference}}">
+                    </p>
                 
                 <button name="save" type="submit" class="btn btn-success">Confirm</button>
             </form>
