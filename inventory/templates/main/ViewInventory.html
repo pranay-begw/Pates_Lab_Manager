@@ -30,7 +30,7 @@
                             <td class="table-blocks">{{ equipment.name }}</td>  
                             <td class="table-blocks">{{ equipment.total_quantity }}</td> 
                             <td class="table-blocks">{{ equipment.location }}</td>
-                            <td class="table-blocks">{{ equipment.img_reference }}</td>                                                        
+                            <td class="table-blocks"><a href= "{{ equipment.img_reference.url }}">IMAGE</a></td>                                                        
                             <td class="table-blocks">
                                 <a href="/EditInventory/{{ equipment.id }}" id="Edit-Page-Link">Edit</a>
                             </td>
