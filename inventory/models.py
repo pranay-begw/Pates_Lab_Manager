@@ -20,7 +20,7 @@ class Inventory_Equipment(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True, default="Name this Equipment") # might have to divide this into name from frop down and new name
     total_quantity = models.IntegerField(null=True, blank=True) # qty to add an entirely new equipment - bottom of form
     location = models.CharField(max_length=20, default='Physics Office', blank=True)
-    img_reference = models.ImageField(null=True, blank=True, upload_to='images_uploaded/')
+    img_reference = models.ImageField(null=True, blank=True, upload_to='images_uploaded/', default='images_uploaded/default.jpg')
 
     class Meta:
         db_table="inventory"
