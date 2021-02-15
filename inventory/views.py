@@ -48,11 +48,6 @@ def add_new_to_inventory(request):
         form = Add_Inventory_Form()
     return render(request, 'main/AddToInventory.html', {'form': form, 'equipment_names': equipment_name})
 
-
-###################################################################################################################################
-    # in the above code, make the form optional such that user ONLY fills either top half or bottom half of the form
-####################################################################################################################################
-
 def view_inventory(request):
     inventory_obj = Inventory_Equipment.objects.all()
     return render(request,"main/ViewInventory.html", {'inventory_obj': inventory_obj})
