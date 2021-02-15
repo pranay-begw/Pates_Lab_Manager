@@ -48,9 +48,9 @@ def add_new_to_inventory(request):
         form = Add_Inventory_Form()
     return render(request, 'main/AddToInventory.html', {'form': form, 'equipment_names': equipment_name})
 
-def view_inventory(request):
+def view_inventory(response):
     inventory_obj = Inventory_Equipment.objects.all()
-    return render(request,"main/ViewInventory.html", {'inventory_obj': inventory_obj})
+    return render(response,"main/ViewInventory.html", {'inventory_obj': inventory_obj})
     
 def edit_inventory(request, id):
     inventory_obj = Inventory_Equipment.objects.get(id = id)
@@ -68,8 +68,10 @@ def update(request, id):
         form = Remove_Inventory_Form()
     return render(request, 'main/EditInventoryDetails.html', {'inventory_obj': inventory_obj })
 
-def add_new_practical(response):
-    return render(response, 'main/AddNewPractical.html', {})
+def add_new_practical(request):
+    equipment_name = Inventory_Equipment.objects.all()
+
+    return render(request, 'main/AddNewPractical.html', {'equipment_names': equipment_name})
 
 def edit_practical(response):
     return render(response, 'main/EditPractical.html', {})
