@@ -72,9 +72,7 @@ class Practical_Equipment_Needed(models.Model):
         db_table="practical_equipment_needed"
 
     def __str__(self):
-        return self.practical.name
-
-
+        return self.practical.practical_name
 
 
 
