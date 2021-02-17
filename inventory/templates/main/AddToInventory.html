@@ -17,6 +17,7 @@
                     <label for='Equipment Name'> Select Equipment</label>
                     {{forms.existing_name}} <!-- CHECK IF THIS WORKS -->
                         <select id="equipment-name" name="existing_name" type="text" placeholder="Select Equipment">
+                            <option value='Select' disabled="true" selected>Select</option>
                             {% for equipment_name in equipment_names %}
                                 <option value="{{ equipment_name.name }}">{{ equipment_name.name }}</option>
                             {% endfor %}  
@@ -48,7 +49,7 @@
                     <label for='Room Number'> Select Room/Lab</label>
                         {{forms.location}}
                         <select id="room-number" name="location" type="text" placeholder="Select Room/Lab">
-                            <option value='Select' disabled="true">Select</option>
+                            <option value='Select' disabled="true" selected>Select</option>
                             <option value='Room 1'>Room 1</option>
                             <option value='Room 2'>Room 2</option>
                             <option value='Room 3'>Room 3</option>
