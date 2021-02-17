@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Inventory_Equipment
-from .forms import Add_Inventory_Form, Remove_Inventory_Form
+from .models import Inventory_Equipment, Practical, Practical_Equipment_Needed
+from .forms import Add_Inventory_Form, Remove_Inventory_Form, Add_Practical_Form, New_Practical_Form
+from django.forms import inlineformset_factory
 # Create your views here.
 
 def homepage(response):
@@ -68,10 +69,33 @@ def update(request, id):
         form = Remove_Inventory_Form()
     return render(request, 'main/EditInventoryDetails.html', {'inventory_obj': inventory_obj })
 
-def add_new_practical(request):
-    equipment_name = Inventory_Equipment.objects.all()
+def name_new_practical(request):
+    practical = Practical.objects.all()
+    if (request.method == 'POST'):
+        form = New_Practical_Form(request.POST)
+        if form.is_valid():
+            form.save()
+        name = str(form.cleaned_data.get('practical_name'))
+        practical_id = int(Practical.objects.filter(practical_name = name).values('id')[0]['id'])
+        #return redirect('/')
+    else:
+        form = New_Practical_Form()
+    
+    return render(request, 'main/NewPractical.html', {'form': form, 'practical': practical})
 
-    return render(request, 'main/AddNewPractical.html', {'equipment_names': equipment_name})
+def add_new_practical(request, id):
+    equipment_name = Inventory_Equipment.objects.all()
+    new_practical = Practical.objects.get(id=id)
+    formset = Add_Practical_Form(queryset=Practical_Equipment_Needed.objects.none(), instance=new_practical)
+    if (request.method == 'POST'):
+        formset = Add_Practical_Form(request.POST, instance=new_practical)
+        if formset.is_valid():
+            formset.save()
+            return redirect('/AddInventory')
+    
+    formset = Add_Practical_Form()
+
+    return render(request, 'main/AddNewPractical.html', {'formset': formset, 'equipment_names': equipment_name})
 
 def edit_practical(response):
     return render(response, 'main/EditPractical.html', {})

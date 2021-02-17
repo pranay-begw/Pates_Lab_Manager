@@ -16,26 +16,28 @@
                 <form action="/AddPractical/" method="POST" autocomplete="on" enctype="multipart/form-data"> <!-- Add backend link to python file to connect all inputs to the backend, the ACTION contains the page url to GO TO one submitted correctly -->
                     {% csrf_token %}
 
-                    <p> New Practical Name 
+                    <!-- {{ form.as_p}} -->
+                    {{ formset.as_p }}
+                    <!-- <p> New Practical Name  -->
                         <!-- {{forms.name}} -->
-                        <input class="text-box" id="practical-name" name="#" type="text" placeholder="Enter Name of New Practical"> <!-- Change to drop down menu -->
-                    </p>
+                        <!-- <input class="text-box" id="practical-name" name="#" type="text" placeholder="Enter Name of New Practical"> Change to drop down menu -->
+                    <!-- </p> -->
 
-                    <p>
-                    <label for='equipment-needed'> Select Equipment Name</label>
-                        <select id="equipment-name" name="#" type="text" placeholder="Select Equipment">
-                            {% for equipment_name in equipment_names %}
-                                <option value="{{ equipment_name.name }}">{{ equipment_name.name }}</option>
-                            {% endfor %} 
-                        </select> <!-- Replace with sqlite link -->
+                    <!-- <p> -->
+                    <!-- <label for='equipment-needed'> Select Equipment Name</label> -->
+                        <!-- <select id="equipment-name" name="#" type="text" placeholder="Select Equipment"> -->
+                            <!-- {% for equipment_name in equipment_names %} -->
+                                <!-- <option value="{{ equipment_name.name }}">{{ equipment_name.name }}</option> -->
+                            <!-- {% endfor %}  -->
+                        <!-- </select> Replace with sqlite link -->
                         
-                        Qty of Equipment Needed 
+                        <!-- Qty of Equipment Needed  -->
                         <!-- {{forms.total_quantity}} -->
-                        <input class="text-box" id="quantity-needed" name="quantity-needed" type="number" placeholder="Qty."> <!-- Change to drop down menu -->
-                    </p>
+                        <!-- <input class="text-box" id="quantity-needed" name="quantity-needed" type="number" placeholder="Qty."> Change to drop down menu -->
+                    <!-- </p> -->
 
-                    <i id="plus-btn" class="fa fa-plus" style="font-size:24px"></i> <!-- Add the code to make this a button -->
-                    <br>
+                    <!-- <i id="plus-btn" class="fa fa-plus" style="font-size:24px"></i> Add the code to make this a button -->
+                    <!-- <br> -->
                     <button name="save" type="submit" class= "#" id="Send-Request">Send Request</button>
 
                 </form>
