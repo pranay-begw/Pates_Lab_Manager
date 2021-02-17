@@ -1,11 +1,12 @@
-{% load static %}
+ {% load static %} <!-- essential to be able to add css to page -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title>{% block title %}HomePage{% endblock %}</title>
+        <!-- The block means that the content between these tags can be different for each page that inherits from base -->
         <meta charset="UTF-8">
         <link rel="stylesheet" href="{% static 'css/HomePageDesign.css' %}">
-        {% block extrahead %}{% endblock %}
+        {% block extrahead %}{% endblock %} <!-- Extrablock is needed so that I can add CSS for individual pages that inherit-->
     </head>
 
     <body id="bg">
@@ -14,10 +15,11 @@
             <div id="TopBar">
                 <div id="BarRight">
                     <button class="buttons" id="SignOutButton">Sign Out</button>
-                    <a href="https://www.patesgs.org/"><img id="logo" alt="Pate's Logo" src="{% static 'images/schoolLogo.png' %}" width="50px" height="50px"></a>
+                    <a href="https://www.patesgs.org/"><img id="logo" alt="Pate's Logo" 
+                        src="{% static 'images/schoolLogo.png' %}" width="50px" height="50px"></a>
                 </div>
 
-                <div id="BarLeft">
+                <div id="BarLeft"> <!-- All the individual buttons for the navbar -->
                     <a href= "/">
                         <button class="buttons" id="Home">Home</button>
                     </a>
@@ -39,7 +41,8 @@
                     </div>
             </div>
 
-            {% block content %}
+            {% block content %} 
+                <!-- All the content between these tags will be unique to the page that inherits from base -->
             {% endblock %}
         
         </div>
