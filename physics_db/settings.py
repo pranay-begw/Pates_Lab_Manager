@@ -78,13 +78,13 @@ WSGI_APPLICATION = 'physics_db.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'physics laboratory',
-        'HOST': 'localhost',
-        'PORT': '3306',
-        'USER': 'root',
-        'PASSWORD':'',
-        'OPTIONS': {
+        'ENGINE': 'django.db.backends.mysql',   #link to the backend database engine
+        'NAME': 'physics laboratory',           #name of the database
+        'HOST': 'localhost',                    #name of the host- localhost while development
+        'PORT': '3306',                         #port number for connection to the server
+        'USER': 'root',                         #username for connection to the databse server
+        'PASSWORD':'',                          #password for connection to the databse server
+        'OPTIONS': { # additional settings for the connection to the databse server
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
         },
     }
