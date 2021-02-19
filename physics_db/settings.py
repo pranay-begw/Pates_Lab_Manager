@@ -82,9 +82,9 @@ DATABASES = {
         'NAME': 'physics laboratory',           #name of the database
         'HOST': 'localhost',                    #name of the host- localhost while development
         'PORT': '3306',                         #port number for connection to the server
-        'USER': 'root',                         #username for connection to the databse server
-        'PASSWORD':'',                          #password for connection to the databse server
-        'OPTIONS': { # additional settings for the connection to the databse server
+        'USER': 'root',                         #username for connection to the database server
+        'PASSWORD':'',                          #password for connection to the database server
+        'OPTIONS': { # additional settings for the connection to the database server
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
         },
     }
