@@ -15,16 +15,18 @@ from django.db import models
 # I HAVE MADE THEM ALL BLANK=TRUE -- AFTER ADDING WORKS TRY TO MAKE THEM BLANK CONDITIONALLY SUCH THAT IT IS ALLOWED ONLY IF SELECTING AN EQUIPMENT THAT EXISTS
 
 # the count of the field below must be equal to the count of columns in db table - therefore deleting quantity_ne
+
+
 class Inventory_Equipment(models.Model):
     #id = models.IntegerField(primary_key=True, null=False, blank=True)
     name = models.CharField(
-        max_length=255, 
-        blank=True, 
-        null=True, 
-        default="Name this Equipment") # might have to divide this into name from frop down and new name
+        max_length=255,     #maximum length of input
+        blank=True,         #the field can be blank
+        null=True,          #the field can be null
+        default="Name this Equipment")  # the defualt value if it is left blank
     total_quantity = models.IntegerField(
         null=True, 
-        blank=True) # qty to add an entirely new equipment - bottom of form
+        blank=True)
     location = models.CharField(
         max_length=20, 
         default='Physics Office', 
@@ -32,16 +34,17 @@ class Inventory_Equipment(models.Model):
     img_reference = models.ImageField(
         null=True, 
         blank=True, 
-        upload_to='images_uploaded/', 
-        default='images_uploaded/default.jpg')
+        upload_to='images_uploaded/',   #the location of where to store uploaded images
+                                        #currently the location is local device
+        default='images_uploaded/default.jpg')  #the default image stored if no image is uploaded by user
 
     class Meta:
-        db_table="inventory"
+        db_table="inventory"    #name of the table in the database to which this model links to
 
     def __str__(self):
-        return self.name
+        return self.name    #when queryed, the 'name' is returned
 
-    #add validation functions
+    #add validation functions - validation is a step i will do after barebones of the program are made
 
 class Practical(models.Model):
     practical_name = models.CharField(
