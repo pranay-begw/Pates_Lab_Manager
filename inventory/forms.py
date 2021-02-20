@@ -1,18 +1,19 @@
-from django import forms
+from django import forms    # importing the forms module from django
 from .models import Inventory_Equipment, Practical, Practical_Equipment_Needed
+# importing all the models created in models.py
 from django.forms import inlineformset_factory
 
 class Add_Inventory_Form(forms.ModelForm):
-    new_quantity = forms.IntegerField(
+    new_quantity = forms.IntegerField(# field to enter the qty needed to be added to existing equipment
         required = False, 
         widget=forms.HiddenInput(), 
         initial=0)
-    existing_name = forms.CharField(
+    existing_name = forms.CharField( # field to select the equipment to add qty to
         max_length=255, 
         required = False)
     class Meta:
-        model = Inventory_Equipment
-        fields = "__all__"
+        model = Inventory_Equipment # name of the model that this form represents
+        fields = "__all__" # means that all attributes of the model named above will have a field
 
 class Remove_Inventory_Form(forms.ModelForm):
     quantity_to_remove = forms.IntegerField(
