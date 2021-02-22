@@ -12,25 +12,23 @@
 
     <body>  
         {% block content %}
-            <div class = "FormForReporting"> <!-- Splitting the row above into columns, this one is for taking input-->
-                <form action="/LossReport/" method="POST" autocomplete="off"> <!-- Add backend link to python file to connect all inputs to the backend -->
+            <div class = "FormForReporting">
+                <form action="/LossReport/" method="POST" autocomplete="off">
                     {% csrf_token %}
                     <label for='equipment_name'> Select Equipment</label>
+                    <!-- below line GETS the list of equipment stored in the database from the server/backend-->
                     {{ forms.equipment_name }}
                         <select id="equipment-name" name="equipment_name" type="text" placeholder="Select Equipment">
+                            <!-- Default heading/option that is disabled to guide the user -->
                             <option value='Select' disabled="true" selected>Select</option>
+                            <!-- For loop to display each individual equipment as a selectable list option in the drop-down -->
                             {% for equipment_name in equipment_names %}
                                 <option value="{{ equipment_name.name }}">{{ equipment_name.name }}</option>
-                            {% endfor %}  
-                            <!-- <option value='Equipment 1'>Equipment 1</option>
-                            <option value='Equipment 2'>Equipment 2</option>
-                            <option value='Equipment 3'>Equipment 3</option>
-                            <option value='Equipment 4'>Equipment 4</option>
-                            <option value='Equipment 5'>Equipment 5</option> -->
-                        </select> <!-- Replace with sqlite link -->
+                            {% endfor %}
+                        </select>
 
                     <p> No. of Losses {{ forms.quantity_to_remove }}
-                        <input id="qty-loss" name="quantity_to_remove" type="text" placeholder="Enter Lost qty."> <!-- Change to drop down menu -->
+                        <input id="qty-loss" name="quantity_to_remove" type="text" placeholder="Enter Lost qty.">
                     </p>
 
                     <button name="save" type="submit" class= "#" id="Send-Request">Send Request</button>
