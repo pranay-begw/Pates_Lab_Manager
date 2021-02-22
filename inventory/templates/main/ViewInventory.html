@@ -24,6 +24,8 @@
                 </thead>
         
                 <tbody>
+                    <!-- inventory_obj is the context passed from the template to refer to the table -->
+                    <!-- the lines below loops through the records of the table displaying needed information -->
                     {% for equipment in inventory_obj %}
                         <tr>
                             <td class="table-blocks">{{ equipment.id }}</td>  

@@ -8,6 +8,7 @@ from django.forms import inlineformset_factory
 def homepage(response):
     return render(response, 'main/HomePage.html', {})
 
+#function to delete a certain quantity of the selected equipment_name
 def report_loss(request):
     equipment_name = Inventory_Equipment.objects.all()  # querys all the data from the inventory table into a queryset - used to render the dropdown
     if request.method == "POST": #checks if data is being SENT to template
@@ -16,8 +17,9 @@ def report_loss(request):
         if form.is_valid(): #check if data entered in the form meets the constraints for forms.py file
             if (form.cleaned_data.get("quantity_to_remove") is not None): # use is not null instead
                 equipment_name_selected = form.cleaned_data.get("equipment_name")
+                # below line querys the quantity existing in the database
                 exisitng_quantity = Inventory_Equipment.objects.filter(name = equipment_name_selected).values('total_quantity')[0]['total_quantity']
-                new_quantity = exisitng_quantity - form.cleaned_data.get("quantity_to_remove")
+                new_quantity = exisitng_quantity - form.cleaned_data.get("quantity_to_remove")  #subtract the quantity
                 Inventory_Equipment.objects.filter(name = equipment_name_selected).values('total_quantity').update(total_quantity = new_quantity)
             return redirect('/ViewInventory')
             # link to a page which shows the full table inventory
@@ -52,9 +54,10 @@ def add_new_to_inventory(request):
     # below line contains the context being sent to the template AddToInventory.html
     return render(request, 'main/AddToInventory.html', {'form': form, 'equipment_names': equipment_name})
 
+# function to get all records from the inventory table and store them in a context dictionary
 def view_inventory(response):
-    inventory_obj = Inventory_Equipment.objects.all()
-    return render(response,"main/ViewInventory.html", {'inventory_obj': inventory_obj})
+    inventory_obj = Inventory_Equipment.objects.all()   #querys every single record into this identifier
+    return render(response,"main/ViewInventory.html", {'inventory_obj': inventory_obj}) #template rendered & inventory_obj passed as context to template
     
 def edit_inventory(request, id):
     inventory_obj = Inventory_Equipment.objects.get(id = id)
