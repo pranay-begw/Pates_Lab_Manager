@@ -9,10 +9,11 @@ def homepage(response):
     return render(response, 'main/HomePage.html', {})
 
 def report_loss(request):
-    equipment_name = Inventory_Equipment.objects.all()
-    if request.method == "POST":
-        form = Remove_Inventory_Form(request.POST) #holds all the information from our form. When submit is clicked this gets a dictionary of all attributes and inputs, creates a new form with all values you entered.
-        if form.is_valid():
+    equipment_name = Inventory_Equipment.objects.all()  # querys all the data from the inventory table into a queryset - used to render the dropdown
+    if request.method == "POST": #checks if data is being SENT to template
+        form = Remove_Inventory_Form(request.POST) #holds all the information from our form. 
+        # When submit is clicked this gets a dictionary of all attributes and inputs, creates a new form with all values you entered.
+        if form.is_valid(): #check if data entered in the form meets the constraints for forms.py file
             if (form.cleaned_data.get("quantity_to_remove") is not None): # use is not null instead
                 equipment_name_selected = form.cleaned_data.get("equipment_name")
                 exisitng_quantity = Inventory_Equipment.objects.filter(name = equipment_name_selected).values('total_quantity')[0]['total_quantity']
@@ -21,7 +22,7 @@ def report_loss(request):
             return redirect('/ViewInventory')
             # link to a page which shows the full table inventory
     else: #basically if method is GET
-        form = Remove_Inventory_Form()      
+        form = Remove_Inventory_Form()
     return render(request, 'main/LossOrBreakReport.html', {'form': form, 'equipment_names': equipment_name})
 
 def add_new_to_inventory(request):

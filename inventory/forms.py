@@ -15,17 +15,18 @@ class Add_Inventory_Form(forms.ModelForm):
         model = Inventory_Equipment # name of the model that this form represents
         fields = "__all__" # means that all attributes of the model named above will have a field
 
-class Remove_Inventory_Form(forms.ModelForm):
-    quantity_to_remove = forms.IntegerField(
+#form to report loss of equipment from inventory
+class Remove_Inventory_Form(forms.ModelForm):   #name of the form to remove equipment
+    quantity_to_remove = forms.IntegerField(    #integer field for the quantity that is to be removed
         required = False, 
         widget=forms.HiddenInput(), 
         initial=0)
-    equipment_name = forms.CharField(
+    equipment_name = forms.CharField(   #name of the equipment to be removed from - this is rendered as a dropdown
         max_length=255, 
         required = False)
     class Meta:
-        model = Inventory_Equipment
-        fields = "__all__"
+        model = Inventory_Equipment # name of the model that this form is connected to
+        fields = "__all__"  # means that all attributes of the model named above will have a field
 
 class New_Practical_Form(forms.ModelForm):
     class Meta:
