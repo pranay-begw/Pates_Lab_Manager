@@ -11,17 +11,17 @@
     </head>
 
     <body>
-        <!-- Change the fields into drop-down, file inputs, or textboxes respectively -->
         {% block content %}
             <form action="/Update/{{ inventory_item.id }}" method="post" class="form-group" enctype="multipart/form-data">
                 {% csrf_token %}
-                <label for="name">Enter New Name: </label><br>
+                <label for="name">Enter New Name: </label><br> <!-- Input textbox to enter new name of item -->
                 <input type="text" name="name" value= "{{ inventory_item.name }}"><br>
         
-                <label for="total_quantity">Enter New Quantity: </label><br>
+                <label for="total_quantity">Enter New Quantity: </label><br> <!-- Input textbox to enter new quantity of selected item-->
                 <input type="text" name="total_quantity" value= "{{ inventory_item.total_quantity }}"><br>
 
-                <label for='Room Number'> Select Room/Lab</label>
+                <label for='Room Number'> Select Room/Lab</label>   <!-- Input dropdown to select new location for selected equipment-->
+                <!-- I will change the below OPTIONS when I make rooms table in the database - this will then be dynamically set -->
                     <select id="room-number" name="location" type="text" placeholder="Select Room/Lab" value="{{ inventory_item.location }}">
                             <option value='Select' disabled="true">Select</option>
                             <option value='Room 1'>Room 1</option>
@@ -31,7 +31,7 @@
                             <option value='Room 5'>Room 5</option>
                     </select>
 
-                    <p> Image Reference
+                    <p> Image Reference <!-- Image field to select new image for the item selected -->
                         <input name="img_reference" type="file" placeholder="Enter Image for location" value="{{inventory_item.img_reference}}">
                     </p>
                 
