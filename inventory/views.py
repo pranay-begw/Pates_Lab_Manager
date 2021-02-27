@@ -94,21 +94,22 @@ def name_new_practical(request):
 
 #formset is saving incorrectly
 def add_new_practical(request, id):
-    #equipment_name = Inventory_Equipment.objects.all()
-    new_practical = Practical.objects.get(id=id)
-    formset = Add_Practical_Formset()
-    #not saving correctly
+    if (Practical_Equipment_Needed.objects.filter(practical_id = id).count()) == 0:
+        new_practical_details = Practical_Equipment_Needed()
+    else:
+        print ('Exists')
+        # redirect to edit practical page
+    #new_practical = Practical.objects.get(id=id)
     if (request.method == 'POST'):
-        formset = Add_Practical_Formset(request.POST, queryset = Practical_Equipment_Needed.objects.filter(practical__id = new_practical.id))
+        #formset = Add_Practical_Formset(request.POST, queryset = Practical_Equipment_Needed.objects.filter(practical__id = id))
+        formset = Add_Practical_Formset(request.POST)
         if formset.is_valid():
-            #formset.save()
             instances = formset.save(commit=False)
             for instance in instances:
-                instance.id = new_practical.id 
+                instance.practical_id  = id
                 instance.save()
-            return redirect('/')
-
-    formset = Add_Practical_Formset(queryset = Practical_Equipment_Needed.objects.filter(practical__id = new_practical.id))
+            return redirect('/AddPractical/%d'%id) #return to the same page after save to be able to add more equipment
+    formset = Add_Practical_Formset(queryset = Practical_Equipment_Needed.objects.filter(practical__id = id))
     return render(request, 'main/AddNewPractical.html', {'formset': formset})
 
 def edit_practical(response):
