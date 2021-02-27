@@ -17,8 +17,10 @@ from django.db import models
 # the count of the field below must be equal to the count of columns in db table - therefore deleting quantity_ne
 
 
+# class to represent the INVENTORY table in the database
 class Inventory_Equipment(models.Model):
     #id = models.IntegerField(primary_key=True, null=False, blank=True)
+    # The above field now not in the code so that the records for each equipment are unique
     name = models.CharField(
         max_length=255,     #maximum length of input
         blank=True,         #the field can be blank

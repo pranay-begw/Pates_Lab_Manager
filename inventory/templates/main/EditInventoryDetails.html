@@ -13,16 +13,16 @@
     <body>
         <!-- Change the fields into drop-down, file inputs, or textboxes respectively -->
         {% block content %}
-            <form action="/Update/{{ inventory_obj.id }}" method="post" class="form-group" enctype="multipart/form-data">
+            <form action="/Update/{{ inventory_item.id }}" method="post" class="form-group" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label for="name">Enter New Name: </label><br>
-                <input type="text" name="name" value= "{{ inventory_obj.name }}"><br>
+                <input type="text" name="name" value= "{{ inventory_item.name }}"><br>
         
                 <label for="total_quantity">Enter New Quantity: </label><br>
-                <input type="text" name="total_quantity" value= "{{ inventory_obj.total_quantity }}"><br>
+                <input type="text" name="total_quantity" value= "{{ inventory_item.total_quantity }}"><br>
 
                 <label for='Room Number'> Select Room/Lab</label>
-                    <select id="room-number" name="location" type="text" placeholder="Select Room/Lab" value="{{ inventory_obj.location }}">
+                    <select id="room-number" name="location" type="text" placeholder="Select Room/Lab" value="{{ inventory_item.location }}">
                             <option value='Select' disabled="true">Select</option>
                             <option value='Room 1'>Room 1</option>
                             <option value='Room 2'>Room 2</option>
@@ -32,7 +32,7 @@
                     </select>
 
                     <p> Image Reference
-                        <input name="img_reference" type="file" placeholder="Enter Image for location" value="{{inventory_obj.img_reference}}">
+                        <input name="img_reference" type="file" placeholder="Enter Image for location" value="{{inventory_item.img_reference}}">
                     </p>
                 
                 <button name="save" type="submit" class="btn btn-success">Confirm</button>
