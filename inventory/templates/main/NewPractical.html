@@ -7,14 +7,15 @@
         {% block extrahead %}
         {% endblock %}
     </head>
-
+    <!-- /AddPractical/{{ practical.id }} -->
     <body>
         {% block content %}
             <div class = "FormForNaming">
                 <!-- something wrong with the id below-->
-                <form action="/AddPractical/{{ practical.id }}" method="POST" autocomplete="on" enctype="multipart/form-data">                     {% csrf_token %}
+                <form action="#" method="POST" autocomplete="on" enctype="multipart/form-data">
+                    {% csrf_token %}
                     {{ form.as_p}}
-                    <button name="save" type="submit" class= "#" id="Send-Request">Send Request</button>
+                    <button name="save" type="submit" class= "btn btn-success" id="Send-Request">Send Request</button>
 
                 </form>
                 <p>testing</p>
