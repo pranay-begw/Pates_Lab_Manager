@@ -58,22 +58,24 @@ def add_new_to_inventory(request):
 def view_inventory(response):
     inventory_obj = Inventory_Equipment.objects.all()   #querys every single record into this identifier
     return render(response,"main/ViewInventory.html", {'inventory_obj': inventory_obj}) #template rendered & inventory_obj passed as context to template
-    
-def edit_inventory(request, id):
-    inventory_obj = Inventory_Equipment.objects.get(id = id)
-    return render(request,'main/EditInventoryDetails.html', {'inventory_obj': inventory_obj})
 
-# NEED to NOT create a new record if saved. try the update() method?
+# function to get the record that needs to be edited and pass it to the template  
+def edit_inventory(request, id):
+    inventory_item = Inventory_Equipment.objects.get(id = id) # get the item with the given id from the inventory table 
+    return render(request,'main/EditInventoryDetails.html', {'inventory_item': inventory_item})
+
+# function to edit the exisiting item
 def update(request, id):  
-    inventory_obj = Inventory_Equipment.objects.get(id = id)  
-    if (request.method == 'POST'):
-        form = Add_Inventory_Form(request.POST or None, request.FILES or None, instance = inventory_obj)
-        if form.is_valid():
-            form.save()
-        return redirect("/ViewInventory")
+    inventory_item = Inventory_Equipment.objects.get(id = id)  # get the item with the given id from the inventory table
+    if (request.method == 'POST'):  # if data is being sent to the server/POSTED to server
+        # below line renders the form, Add_Inventory_Form with data already filled in - the data is the instance
+        form = Add_Inventory_Form(request.POST or None, request.FILES or None, instance = inventory_item)
+        if form.is_valid(): #if the form meets validation criteria
+            form.save() #save updated details to the database
+        return redirect("/ViewInventory")   # once completed lead the inventory table page
     else: #basically if method is GET
-        form = Remove_Inventory_Form()
-    return render(request, 'main/EditInventoryDetails.html', {'inventory_obj': inventory_obj })
+        form = Remove_Inventory_Form()  #empty form if GETTING the page from database 
+    return render(request, 'main/EditInventoryDetails.html', {'inventory_obj': inventory_item })
 
 def name_new_practical(request):
     practical = Practical.objects.all()
