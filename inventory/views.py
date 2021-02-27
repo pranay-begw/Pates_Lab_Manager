@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Inventory_Equipment, Practical, Practical_Equipment_Needed
-from .forms import Add_Inventory_Form, Remove_Inventory_Form, Add_Practical_Form, New_Practical_Form
+from .forms import Add_Inventory_Form, Remove_Inventory_Form, Add_Practical_Formset, New_Practical_Form
 from django.forms import inlineformset_factory
 # Create your views here.
 
@@ -80,30 +80,36 @@ def name_new_practical(request):
     if (request.method == 'POST'):
         form = New_Practical_Form(request.POST)
         if form.is_valid():
-            new_name = form.save()
-            new_id = new_name.objects.last()
+            new_name = form.cleaned_data.get('name_new_practical')
+            
+        new_practical = Practical.objects.create(practical_name = new_name)    
+        new_id = Practical.objects.filter(practical_name= new_name).values('id')[0]['id']
+        print (str(new_id))
             # need to get and use id of latest added object
-        #name = str(form.cleaned_data.get('practical_name'))
-        #practical_id = int(Practical.objects.filter(practical_name = name).values('id')[0]['id'])
         practical = Practical.objects.get(pk = new_id)
-        return redirect('/AddPractical/'+str(new_id))
+        return redirect('/AddPractical/%d'%new_id)
     else:
         form = New_Practical_Form()
     return render(request, 'main/NewPractical.html', {'form': form, 'practical': practical})
 
+#formset is saving incorrectly
 def add_new_practical(request, id):
-    equipment_name = Inventory_Equipment.objects.all()
+    #equipment_name = Inventory_Equipment.objects.all()
     new_practical = Practical.objects.get(id=id)
-    formset = Add_Practical_Form(queryset=Practical_Equipment_Needed.objects.none(), instance=new_practical)
+    formset = Add_Practical_Formset()
+    #not saving correctly
     if (request.method == 'POST'):
-        formset = Add_Practical_Form(request.POST, instance=new_practical)
+        formset = Add_Practical_Formset(request.POST, queryset = Practical_Equipment_Needed.objects.filter(practical__id = new_practical.id))
         if formset.is_valid():
-            formset.save()
+            #formset.save()
+            instances = formset.save(commit=False)
+            for instance in instances:
+                instance.id = new_practical.id 
+                instance.save()
             return redirect('/')
-    
-    formset = Add_Practical_Form()
 
-    return render(request, 'main/AddNewPractical.html', {'formset': formset, 'equipment_names': equipment_name})
+    formset = Add_Practical_Formset(queryset = Practical_Equipment_Needed.objects.filter(practical__id = new_practical.id))
+    return render(request, 'main/AddNewPractical.html', {'formset': formset})
 
 def edit_practical(response):
     return render(response, 'main/EditPractical.html', {})

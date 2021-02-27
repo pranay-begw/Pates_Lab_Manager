@@ -48,7 +48,7 @@ class Inventory_Equipment(models.Model):
 
 class Practical(models.Model):
     practical_name = models.CharField(
-        max_length=30, 
+        max_length=100, 
         blank=True)
     equipment_needed = models.ManyToManyField(
         'Inventory_Equipment', 

@@ -1,7 +1,7 @@
 from django import forms    # importing the forms module from django
 from .models import Inventory_Equipment, Practical, Practical_Equipment_Needed
 # importing all the models created in models.py
-from django.forms import inlineformset_factory
+from django.forms import modelformset_factory
 
 class Add_Inventory_Form(forms.ModelForm):
     new_quantity = forms.IntegerField(# field to enter the qty needed to be added to existing equipment
@@ -28,25 +28,21 @@ class Remove_Inventory_Form(forms.ModelForm):   #name of the form to remove equi
         model = Inventory_Equipment # name of the model that this form is connected to
         fields = "__all__"  # means that all attributes of the model named above will have a field
 
-class New_Practical_Form(forms.ModelForm):
+class New_Practical_Form(forms.Form):
+    name_new_practical = forms.CharField(max_length=100)
+
+class New_Practical_Detail_Form(forms.ModelForm):
     class Meta:
-        model = Practical
-        fields = ('practical_name',)
+        model = Practical_Equipment_Needed
+        fields = ('equipment_needed', 'equipment_quantity', )
 
-Add_Practical_Form = inlineformset_factory(
-    Practical,
+Add_Practical_Formset = modelformset_factory(
     Practical_Equipment_Needed,
-    fields=['equipment_needed','equipment_quantity'],
-    can_delete = False)
+    New_Practical_Detail_Form
+)
 
-# class Practical_Equipment_Needed_Formset(forms.ModelForm):
-#     class Meta:
-#         model = Practical_Equipment_Needed
-#         fields = 
-
-    # #add validation function
-    # def clean_field(self):
-    #     print ('hola from validation')
-    #     data = self.cleaned_data['new_quantity']
-    #     if not data:
-    #         data = 0
+# Add_Practical_Formset = inlineformset_factory(
+#     Practical,
+#     Practical.equipment_needed.through,
+#     fields=['equipment_needed','equipment_quantity'],
+# )

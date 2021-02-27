@@ -12,8 +12,9 @@
 
     <body>
         {% block content %}
-            <div class = "FormForAdding"> <!-- Splitting the row above into columns, this one is for taking input-->
-                <form action="/AddPractical/" method="POST" autocomplete="on" enctype="multipart/form-data"> <!-- Add backend link to python file to connect all inputs to the backend, the ACTION contains the page url to GO TO one submitted correctly -->
+            <div class = "FormForAdding">
+                <!-- Add ID in the action option below -->
+                <form action="/" method="POST" autocomplete="on" enctype="multipart/form-data"> 
                     {% csrf_token %}
 
                     <!-- {{ form.as_p}} -->
@@ -38,7 +39,7 @@
 
                     <!-- <i id="plus-btn" class="fa fa-plus" style="font-size:24px"></i> Add the code to make this a button -->
                     <!-- <br> -->
-                    <button name="save" type="submit" class= "#" id="Send-Request">Send Request</button>
+                    <button name="save" type="submit" class= "btn btn-success" id="Send-Request">Send Request</button>
 
                 </form>
                 <p>testing</p>
