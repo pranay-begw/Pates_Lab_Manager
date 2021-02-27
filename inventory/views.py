@@ -59,6 +59,8 @@ def view_inventory(response):
     inventory_obj = Inventory_Equipment.objects.all()   #querys every single record into this identifier
     return render(response,"main/ViewInventory.html", {'inventory_obj': inventory_obj}) #template rendered & inventory_obj passed as context to template
 
+# in both the functions below, id is the ID for the item in inventory to be edited
+
 # function to get the record that needs to be edited and pass it to the template  
 def edit_inventory(request, id):
     inventory_item = Inventory_Equipment.objects.get(id = id) # get the item with the given id from the inventory table 
