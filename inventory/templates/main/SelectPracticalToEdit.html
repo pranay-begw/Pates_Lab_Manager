@@ -3,27 +3,26 @@
 
 <html>
     <head>
-        {% block title %}Add New Practical{% endblock %}
-        <link rel="stylesheet" href="{% static 'css/HomePageDesign.css' %}">
-        <!-- Add link to its own css -->
+        {% block title %}Select Practical to Edit{% endblock %}
+        {% block extrahead %}
+        {% endblock %}
     </head>
 
-    
     <body>
         {% block content %}
-            <div class = "FormForAdding">
-                <!-- Add ID in the action option below -->
-                <form action="#" method="POST" autocomplete="on" enctype="multipart/form-data"> 
+            <div class = "FormForNaming">
+                <form action="#" method="POST" autocomplete="on" enctype="multipart/form-data">
                     {% csrf_token %}
-<!-- 
+
                     <label for='Practical Name'> Select Practical Name</label>
+                    {{form.practical_name}}
                         <select id="practical-name" name="name_practical" type="text" placeholder="Select Practical to Edit">
                             <option value='Select' disabled="true" selected>Select</option>
                             {% for practical_name in practical_names %}
                                 <option value="{{ practical_name.practical_name }}">{{ practical_name.practical_name }}</option>
-                            {% endfor %} -->
+                            {% endfor %}  
+                        </select>
 
-                    {{ formset.as_p }}
                     <button name="save" type="submit" class= "btn btn-success" id="Send-Request">Send Request</button>
 
                 </form>

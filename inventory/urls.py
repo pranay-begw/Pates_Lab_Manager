@@ -12,7 +12,10 @@ urlpatterns = [
      path("AddInventory/", views.add_new_to_inventory, name="add_new_to_inventory"),
      path("AddPractical/<int:id>", views.add_new_practical, name="add_new_practical"),
      path("NameNewPractical/", views.name_new_practical, name="name_new_practical"),
-     path("EditPractical/", views.edit_practical, name="edit_practical"),
+
+     path("SelectPractical/", views.select_practical_to_edit, name="select_practical_to_edit"),
+     path("EditPractical/<int:id>", views.edit_practical, name="edit_practical"),
+     
      path("ViewInventory/", views.view_inventory, name="view_inventory"),
 
      # new urls added to be able to edit the inventory equipment - based on their ID

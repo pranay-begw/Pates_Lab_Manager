@@ -41,6 +41,9 @@ Add_Practical_Formset = modelformset_factory(
     New_Practical_Detail_Form
 )
 
+class Select_Practical_Form(forms.Form):
+    name_practical = forms.CharField(max_length=255) 
+
 # Add_Practical_Formset = inlineformset_factory(
 #     Practical,
 #     Practical.equipment_needed.through,

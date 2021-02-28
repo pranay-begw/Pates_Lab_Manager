@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Inventory_Equipment, Practical, Practical_Equipment_Needed
-from .forms import Add_Inventory_Form, Remove_Inventory_Form, Add_Practical_Formset, New_Practical_Form
+from .forms import Add_Inventory_Form, Remove_Inventory_Form, Add_Practical_Formset, New_Practical_Form, Select_Practical_Form
 from django.forms import inlineformset_factory
 # Create your views here.
 
@@ -116,8 +116,37 @@ def add_new_practical(request, id):
     formset = Add_Practical_Formset(queryset = Practical_Equipment_Needed.objects.filter(practical__id = id))
     return render(request, 'main/AddNewPractical.html', {'formset': formset})
 
-def edit_practical(response):
-    return render(response, 'main/EditPractical.html', {})
+def select_practical_to_edit(request):
+    practical_names = Practical.objects.all()
+    if (request.method == 'POST'):
+        form = Select_Practical_Form(request.POST)
+        if form.is_valid():
+            selected_practical_name = form.cleaned_data.get('name_practical')
+        
+        id_selected  =  Practical.objects.filter(practical_name= selected_practical_name).values('id')[0]['id']
+        return redirect('/EditPractical/%d'%id_selected)
+    
+    else:
+        form = Select_Practical_Form()
+    
+    return render(request,'main/SelectPracticalToEdit.html', {'form': form, 'practical_names': practical_names})
+
+def edit_practical(request, id):
+    practical_names = Practical.objects.all()
+
+    if (request.method == 'POST'):
+        formset = Add_Practical_Formset(request.POST)#, queryset = Practical_Equipment_Needed.objects.filter(practical__id = id), can_delete=True)
+        if formset.is_valid():
+            instances = formset.save(commit=False)
+            for instance in instances:
+                instance.practical_id = id
+                instance.save()
+        return redirect('/EditPractical/%d'%id)
+
+    formset = Add_Practical_Formset(queryset = Practical_Equipment_Needed.objects.filter(practical__id = id))
+
+
+    return render(request, 'main/EditPractical.html', {'formset': formset, 'practical_names': practical_names})
 
 # def add_new_practical(request):
 #     if id:
