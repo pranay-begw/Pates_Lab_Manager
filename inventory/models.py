@@ -48,14 +48,15 @@ class Inventory_Equipment(models.Model):
 
     #add validation functions - validation is a step i will do after barebones of the program are made
 
+# Table to store list of all the practical - just their names
 class Practical(models.Model):
     practical_name = models.CharField(
         max_length=100, 
         blank=True)
-    equipment_needed = models.ManyToManyField(
-        'Inventory_Equipment', 
+    equipment_needed = models.ManyToManyField(  # this is used to link to the link table to normalize the many to many relationship
+        'Inventory_Equipment', # name of the table to which this has a many to many relationship with
         blank=True, 
-        through='Practical_Equipment_Needed')
+        through='Practical_Equipment_Needed')   # name of the link table to normalize the many to many relationship
     
     class Meta:
         db_table="practical"
@@ -63,15 +64,16 @@ class Practical(models.Model):
     def __str__(self):
         return self.practical_name
 
+# Table to store the equipment needed in every practical and their quantities
 class Practical_Equipment_Needed(models.Model):
-    equipment_needed = models.ForeignKey(
-        'Inventory_Equipment', 
-        on_delete=models.CASCADE)
-    practical = models.ForeignKey(
+    equipment_needed = models.ForeignKey(   # a foreign key of the inventory table to store the equipment
+        'Inventory_Equipment', # table of which this is a foreign key
+        on_delete=models.CASCADE)   # needed to reflect any deletions all across the database 
+    practical = models.ForeignKey(  #foreign key of the Practical table
         'Practical', 
         on_delete=models.CASCADE)
-    equipment_quantity = models.IntegerField(
-        default=0)
+    equipment_quantity = models.IntegerField(   # integer field needed to store the quantity of an equipment
+        default=0)  # the quantity if no number is entered by the user
 
     class Meta:
         db_table="practical_equipment_needed"
