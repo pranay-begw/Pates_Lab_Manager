@@ -31,21 +31,23 @@ class Remove_Inventory_Form(forms.ModelForm):   #name of the form to remove equi
 class New_Practical_Form(forms.Form):
     name_new_practical = forms.CharField(max_length=100)
 
-class New_Practical_Detail_Form(forms.ModelForm):
+# form to input a single equipment and its quantity for a practical
+class New_Practical_Detail_Form(forms.ModelForm):   # declaring the form
     class Meta:
-        model = Practical_Equipment_Needed
-        fields = ('equipment_needed', 'equipment_quantity', )
+        model = Practical_Equipment_Needed  # the model that this form is connected to
+        fields = ('equipment_needed', 'equipment_quantity', )   # fields needed in the form
 
-Add_Practical_Formset = modelformset_factory(
-    Practical_Equipment_Needed,
-    New_Practical_Detail_Form
+# formset which creates multiple instances of the form above
+Add_Practical_Formset = modelformset_factory(   # declaring the formset
+    Practical_Equipment_Needed, #the models that this formset is connected to
+    New_Practical_Detail_Form   # the form (above) whose copies this formset creates
 )
 
 class Select_Practical_Form(forms.Form):
     name_practical = forms.CharField(max_length=255) 
 
-# Add_Practical_Formset = inlineformset_factory(
-#     Practical,
-#     Practical.equipment_needed.through,
-#     fields=['equipment_needed','equipment_quantity'],
+# Add_Practical_Formset = inlineformset_factory(  #creating the formset to input details of practical
+#     Practical,  # the parent model for the form
+#     Practical.equipment_needed.through, # 'through' reference/ link model for the form 
+#     fields=['equipment_needed','equipment_quantity'],   #the fields needed in  the form
 # )
