@@ -13,13 +13,27 @@
     <body>
         {% block content %}
             <div class = "FormForAdding">
-                <!-- Add ID in the action option below -->
+                <!-- Declaring the form to add details -->
                 <form action="#" method="POST" autocomplete="on" enctype="multipart/form-data"> 
                     {% csrf_token %}
 
-                    <!-- {{ form.as_p}} -->
-                    {{ formset.as_p }}
-                    <!-- <p> New Practical Name  -->
+                    {{ formset.as_p }} <!-- Django template language to allow django render simple formset-->
+                    
+                    <button name="save" type="submit" class= "btn btn-success" id="Send-Request">Send Request</button>
+
+                </form>
+                <p>testing</p>
+            </div>
+        {% endblock %}
+    </body>
+</html>
+
+
+
+
+
+
+<!-- <p> New Practical Name  -->
                         <!-- {{forms.name}} -->
                         <!-- <input class="text-box" id="practical-name" name="#" type="text" placeholder="Enter Name of New Practical"> Change to drop down menu -->
                     <!-- </p> -->
@@ -39,11 +53,3 @@
 
                     <!-- <i id="plus-btn" class="fa fa-plus" style="font-size:24px"></i> Add the code to make this a button -->
                     <!-- <br> -->
-                    <button name="save" type="submit" class= "btn btn-success" id="Send-Request">Send Request</button>
-
-                </form>
-                <p>testing</p>
-            </div>
-        {% endblock %}
-    </body>
-</html>
