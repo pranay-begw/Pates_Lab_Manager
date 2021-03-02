@@ -14,6 +14,7 @@
                 <form action="#" method="POST" autocomplete="on" enctype="multipart/form-data">
                     {% csrf_token %}
 
+                    <p>
                     <label for='Practical Name'> Select Practical Name</label>
                     {{form.practical_name}}
                         <select id="practical-name" name="name_practical" type="text" placeholder="Select Practical to Edit">
@@ -22,6 +23,7 @@
                                 <option value="{{ practical_name.practical_name }}">{{ practical_name.practical_name }}</option>
                             {% endfor %}  
                         </select>
+                    </p>
 
                     <button name="save" type="submit" class= "btn btn-success" id="Send-Request">Send Request</button>
 
