@@ -43,6 +43,7 @@ Add_Practical_Formset = modelformset_factory(   # declaring the formset
     New_Practical_Detail_Form   # the form (above) whose copies this formset creates
 )
 
+#Form to select the practical that the user wants to edit
 class Select_Practical_Form(forms.Form):
     name_practical = forms.CharField(max_length=255) 
 

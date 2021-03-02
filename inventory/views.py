@@ -86,8 +86,7 @@ def name_new_practical(request):
     if (request.method == 'POST'):  #if connection method is POST
         form = New_Practical_Form(request.POST) #creates new form to send data to server
         if form.is_valid():
-            new_name = form.cleaned_data.get('name_new_practical')  #gets name of the new practical in the variable
-            
+            new_name = form.cleaned_data.get('name_new_practical')  #gets name of the new practical in the variable   
         new_practical = Practical.objects.create(practical_name = new_name)    # creates new practicalin the database
         new_id = Practical.objects.filter(practical_name= new_name).values('id')[0]['id']   #gets id of the newly added practical
 
@@ -120,36 +119,37 @@ def add_new_practical(request, id): # ID of the newly added practical is a param
 
     return render(request, 'main/AddNewPractical.html', {'formset': formset})
 
+# function to enable user to choose the practical whose details they want to edit
 def select_practical_to_edit(request):
-    practical_names = Practical.objects.all()
-    if (request.method == 'POST'):
-        form = Select_Practical_Form(request.POST)
-        if form.is_valid():
-            selected_practical_name = form.cleaned_data.get('name_practical')
+    practical_names = Practical.objects.all()   # storing objects of all practical to render names in the dropdown on webpage
+    if (request.method == 'POST'):  # if POSTING data to the backend
+        form = Select_Practical_Form(request.POST)  # rendering the Select_Practical_Form needed to take input of practical name
+        if form.is_valid(): # checking if form meets validation constraints
+            selected_practical_name = form.cleaned_data.get('name_practical')   # storing the name selected by user in a variable
         
-        id_selected  =  Practical.objects.filter(practical_name= selected_practical_name).values('id')[0]['id']
-        return redirect('/EditPractical/%d'%id_selected)
+        id_selected  =  Practical.objects.filter(practical_name= selected_practical_name).values('id')[0]['id'] # getting id of the selected practical
+        return redirect('/EditPractical/%d'%id_selected)    # redirecting user to the page needed to edit the details of the selected practical
+    else:   # if GETTING data/information
+        form = Select_Practical_Form()  # displays an empty form
     
-    else:
-        form = Select_Practical_Form()
-    
-    return render(request,'main/SelectPracticalToEdit.html', {'form': form, 'practical_names': practical_names})
+    return render(request,'main/SelectPracticalToEdit.html', {'form': form, 'practical_names': practical_names})    #renders webpage and sends data to template
 
+# function to edit details of practical selected using select_practical_to_add
 def edit_practical(request, id):
-    practical_names = Practical.objects.all()
+    practical_names = Practical.objects.all()   # storing all practical objects in a queryset
 
     if (request.method == 'POST'):
-        formset = Add_Practical_Formset(request.POST)#, queryset = Practical_Equipment_Needed.objects.filter(practical__id = id), can_delete=True)
+        formset = Add_Practical_Formset(request.POST)   # renders the formset to allow user to edit practical selected
         if formset.is_valid():
-            instances = formset.save(commit=False)
-            for instance in instances:
-                instance.practical_id = id
+            instances = formset.save(commit=False)  # commit is false so that the user can make multiple additions at the same time
+            for instance in instances:  # cycle through all instances and save them individually to database
+                instance.practical_id = id  # making sure instance is saved for the practical with th correct id
                 instance.save()
-        return redirect('/EditPractical/%d'%id)
+        return redirect('/EditPractical/%d'%id) # leads to the same page to allow user to add/edit more details
 
+     # displaying formset with existing details of practical
     formset = Add_Practical_Formset(queryset = Practical_Equipment_Needed.objects.filter(practical__id = id))
-
-
+    
     return render(request, 'main/EditPractical.html', {'formset': formset, 'practical_names': practical_names})
 
 # def add_new_practical(request):
