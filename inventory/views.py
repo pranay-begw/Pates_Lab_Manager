@@ -122,6 +122,7 @@ def add_new_practical(request, id): # ID of the newly added practical is a param
 # function to enable user to choose the practical whose details they want to edit
 def select_practical_to_edit(request):
     practical_names = Practical.objects.all()   # storing objects of all practical to render names in the dropdown on webpage
+
     if (request.method == 'POST'):  # if POSTING data to the backend
         form = Select_Practical_Form(request.POST)  # rendering the Select_Practical_Form needed to take input of practical name
         if form.is_valid(): # checking if form meets validation constraints
@@ -129,6 +130,7 @@ def select_practical_to_edit(request):
         
         id_selected  =  Practical.objects.filter(practical_name= selected_practical_name).values('id')[0]['id'] # getting id of the selected practical
         return redirect('/EditPractical/%d'%id_selected)    # redirecting user to the page needed to edit the details of the selected practical
+        
     else:   # if GETTING data/information
         form = Select_Practical_Form()  # displays an empty form
     
