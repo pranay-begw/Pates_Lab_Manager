@@ -4,6 +4,7 @@ from .models import Inventory_Equipment, Practical, Practical_Equipment_Needed, 
 from .forms import Add_Inventory_Form, Remove_Inventory_Form, Add_Practical_Formset, New_Practical_Form, Select_Practical_Form, Book_Lesson_Form
 from django.forms import inlineformset_factory
 from django.contrib import messages
+from django.core.mail import send_mail
 # Create your views here.
 
 # homepage function needed to book a practical
@@ -55,7 +56,7 @@ def homepage(request):
                 # add clause such that it saves only if total calculated equipment is available.
                 equipment_names, equipment_quantities = calculate_total_equipment(booking_details)
                 message = create_message(equipment_names, equipment_quantities)
-
+                email_message(message)
                 Lesson.objects.create(
                     staff=booking_details['staff'], 
                     period_time=booking_details['period_time'], 
@@ -95,7 +96,6 @@ def calculate_total_equipment(booking_details):
 
     return total_equipment_needed, equipment_names_list
 
-
 def create_message(equipment_names, equipment_quantities):
     message_text = ''
     for i in range (0, len(equipment_names)):
@@ -105,6 +105,15 @@ def create_message(equipment_names, equipment_quantities):
 
     print (message_text)
     return message_text
+
+def email_message(message):
+        send_mail(
+            'Practical Request',
+            message,
+            'pranaybeg@gmail.com',
+            ['pranaybegwani@gmail.com'],
+            fail_silently=False,
+        )
 
 #function to delete a certain quantity of the selected equipment_name
 def report_loss(request):
