@@ -115,6 +115,9 @@ class Period(models.Model):
     class Meta:
         db_table = 'period_number'
     
+    def __str__(self):
+        return self.period_number
+    
 
 class Lesson(models.Model):
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE, default= 1, null=True, blank=True)

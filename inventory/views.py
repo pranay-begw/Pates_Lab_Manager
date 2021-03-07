@@ -1,12 +1,66 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Inventory_Equipment, Practical, Practical_Equipment_Needed
-from .forms import Add_Inventory_Form, Remove_Inventory_Form, Add_Practical_Formset, New_Practical_Form, Select_Practical_Form
+from .models import Inventory_Equipment, Practical, Practical_Equipment_Needed, Room, Staff, Lesson, Period
+from .forms import Add_Inventory_Form, Remove_Inventory_Form, Add_Practical_Formset, New_Practical_Form, Select_Practical_Form, Book_Lesson_Form
 from django.forms import inlineformset_factory
 # Create your views here.
 
-def homepage(response):
-    return render(response, 'main/HomePage.html', {})
+# homepage function needed to book a practical
+def homepage(request):
+    practical_list = Practical.objects.all()
+    room_list = Room.objects.all()
+    period_numbers = Period.objects.all()
+    staff_list = Staff.objects.all()
+    # get staff from the person the name of user who has logged in
+
+    if request.method == "POST":
+        form = Book_Lesson_Form(request.POST)
+        if form.is_valid():
+            booking_details = {
+                'staff': '', 
+                'period_time': '', 
+                'date': '', 
+                'practical_booking': '', 
+                'room': '', 
+                'number_students': '',}
+
+            staff_name = form.cleaned_data.get('staff')
+            staff_obj = Staff.objects.filter(staff_name=staff_name)[0]
+            booking_details['staff'] = staff_obj
+
+            period_number = form.cleaned_data.get('period_time')
+            period_obj = Period.objects.filter(period_number= period_number)[0]
+            booking_details['period_time'] = period_obj
+
+            booking_date = form.cleaned_data.get('date')
+            booking_details['date'] = booking_date
+
+            practical_to_book = form.cleaned_data.get('practical_booking')
+            practical_booking_obj = Practical.objects.filter(practical_name=practical_to_book)[0]
+            booking_details['practical_booking'] = practical_booking_obj
+
+            room_to_book = form.cleaned_data.get('room')
+            room_obj = Room.objects.filter(room_name = room_to_book)[0]
+            booking_details['room'] = room_obj
+
+            booking_details['number_students'] = form.cleaned_data.get('number_students')
+
+            # Add checks to see if a booking already exists
+            if (Lesson.objects.filter(date=booking_details['date'], period_time=booking_details['period_time'], room=booking_details['room']).exists()):
+                print ('A LESSON IN THIS ROOM FOR THIS TIME AND DATE EXISTS!!!')
+            else:
+                Lesson.objects.create(
+                    staff=booking_details['staff'], 
+                    period_time=booking_details['period_time'], 
+                    date=booking_details['date'], 
+                    practical_booking=booking_details['practical_booking'], 
+                    room=booking_details['room'], 
+                    number_students=booking_details['number_students'])
+    
+            #FORM WORKS NEED TO SORT OUT TEMPLATE
+    else:
+        form = Book_Lesson_Form()
+    return render(request, 'main/HomePage.html', {'form': form, 'practical_list':practical_list, 'room_list': room_list, 'period_numbers': period_numbers, 'staff_list': staff_list})
 
 #function to delete a certain quantity of the selected equipment_name
 def report_loss(request):

@@ -1,5 +1,5 @@
 from django import forms    # importing the forms module from django
-from .models import Inventory_Equipment, Practical, Practical_Equipment_Needed
+from .models import Inventory_Equipment, Practical, Practical_Equipment_Needed, Lesson, Staff, Room, Period
 # importing all the models created in models.py
 from django.forms import modelformset_factory
 
@@ -46,6 +46,20 @@ Add_Practical_Formset = modelformset_factory(   # declaring the formset
 #Form to select the practical that the user wants to edit
 class Select_Practical_Form(forms.Form):
     name_practical = forms.CharField(max_length=255) 
+
+class Book_Lesson_Form(forms.Form):
+    staff = forms.ModelChoiceField(queryset=Staff.objects.all(), empty_label='Select')
+    period_time = forms.ModelChoiceField(queryset=Period.objects.all(), empty_label='Select')
+    date = forms.DateField()
+    practical_booking = forms.ModelChoiceField(queryset=Practical.objects.all(), empty_label='Select') #or is it fk for Practical_Equipment_Needed
+    room = forms.ModelChoiceField(queryset=Room.objects.all(), empty_label='Select') #location of lesson
+    number_students = forms.IntegerField()
+
+# class Book_Lesson_Form(forms.ModelForm):
+#     class Meta:
+#         model = Lesson
+#         fields = "__all__"
+
 
 # Add_Practical_Formset = inlineformset_factory(  #creating the formset to input details of practical
 #     Practical,  # the parent model for the form

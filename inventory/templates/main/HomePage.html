@@ -13,50 +13,73 @@
             <div class = "OrderEquipPage"> <!-- This is a row -->
 
                 <div class = "TheForm"> <!-- Splitting the row above into columns, this one is for taking input-->
-                    <form action="#" method="POST"> <!-- Add backend link to python file to connect all inputs to the backend -->
-                        
-                        <label for='Practical Name'> Select Practical Name</label>
-                        <br>
-                            <select class="large-drop-downs" id="practical-selector" name="name" type="text" placeholder="Select Practical">
-                                <option value='Practical 1'>Practical 1</option>
-                                <option value='Practical 2'>Practical 2</option>
-                                <option value='Practical 3'>Practical 3</option>
-                                <option value='Practical 4'>Practical 4</option>
-                                <option value='Practical 5'>Practical 5</option>
-                            </select> <!-- Replace with sqlite link -->
+                    <form action="#" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
 
-                        <p> No. of Students <br>
-                            <input class="text-boxes" id="student-number-box" name="Select class/ No. of Students" type="text" placeholder="Enter Number"> <!-- Change to drop down menu -->
+                        {{ form.as_p }}
+                        <!-- <label for='Practical Name'> Select Practical Name</label>
+                        <br>
+                        
+                        <select id="practical-list" name="practical_booking" type="text" placeholder="Select Practical">
+                            <option value='Select' disabled="true" selected>Select</option>
+                            {% for practical_name in practical_list %}
+                                <option value="{{ practical_name.practical_name }}">{{ practical_name.practical_name }}</option>
+                            {% endfor %}  
+                        </select>
+                        
+                        <p> No. of Students 
+                            
+                            <br>
+                            <input class="text-boxes" id="student-number-box" name="number_students" type="text" placeholder="Enter Number">
                         </p>
 
                         <label for='Room Number'> Select Room/Lab</label>
                         <br>
-                            <select class="small-drop-downs" id="room-number-box" name="name" type="text" placeholder="Select Room/Lab">
-                                <option value='Room 1'>Room 1</option>
-                                <option value='Room 2'>Room 2</option>
-                                <option value='Room 3'>Room 3</option>
-                                <option value='Room 4'>Room 4</option>
-                                <option value='Room 5'>Room 5</option>
-                            </select> <!-- Replace with sqlite link -->
+                        
+                        <select class="small-drop-downs" id="room-list" name="room" type="text" placeholder="Select Room">
+                            <option value='Select' disabled="true" selected>Select</option>
+                            {% for room in room_list %}
+                                <option value="{{ room.room_name }}">{{ room.room_name }}</option>
+                            {% endfor %}  
+                        </select>
+
                         <br>
                         <br>
+
                         <label for="Lesson Number">Lesson Number</label>
                         <br>
-                            <select class="small-drop-downs" id="lesson-number-box" name="name" type="text" placeholder="Select Lesson">
-                                <option value='Lesson 1'>Lesson 1</option>
-                                <option value='Lesson 2'>Lesson 2</option>
-                                <option value='Lesson 3'>Lesson 3</option>
-                                <option value='Lesson 4'>Lesson 4</option>
-                                <option value='Lesson 5'>Lesson 5</option>
-                            </select> <!-- Replace with sqlite link -->
+                        
+                        <select class="small-drop-downs" id="lesson-list" name="period_time" type="text" placeholder="Select Lesson Time">
+                            <option value='Select' disabled="true" selected>Select</option>
+                            {% for period in period_numbers %}
+                                <option value="{{ period.period_number }}">{{ period.period_number }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <br>
                         <br>
 
-                        <p> Date <br>
-                            <input class="text-boxes" id="date-box" name="Select date" type="date" placeholder="Enter Date">
-                        </p>
+                        <label for="Staff Name">Staff Name</label>
+                        <br>
+                        
+                        <select class="small-drop-downs" id="staff-list" name="staff" type="text" placeholder="Select Staff">
+                            <option value='Select' disabled="true" selected>Select</option>
+                            {% for staff in staff_list %}
+                                <option value="{{ staff.staff_name }}">{{ staff.staff_name }}</option>
+                            {% endfor %}
+                        </select>
 
-                        <button class= "buttons" id="send-request">Send Request</button>
+                        <br>
+                        <br>
 
+                        <label for="date">Date</label>
+                        <br>
+                        
+                        <input class="text-boxes" id="date-box" name="date" type="date" placeholder="Enter Date"> -->
+
+                        <button name="save" type="submit" class= "buttons" id="send-request">Send Request</button>
+
+                        {{ form.errors }}
                     </form>
                     <p>testing</p>
                 </div>
