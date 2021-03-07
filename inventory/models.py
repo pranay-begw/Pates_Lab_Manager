@@ -26,7 +26,7 @@ class Inventory_Equipment(models.Model):
         blank=True,         #the field can be blank
         null=True,          #the field can be null
         default="Name this Equipment")  # the defualt value if it is left blank
-    total_quantity = models.IntegerField(
+    total_quantity = models.PositiveIntegerField(
         null=True, 
         blank=True)
     location = models.CharField(
@@ -72,7 +72,7 @@ class Practical_Equipment_Needed(models.Model):
     practical = models.ForeignKey(  #foreign key of the Practical table
         'Practical', 
         on_delete=models.CASCADE)
-    equipment_quantity = models.IntegerField(   # integer field needed to store the quantity of an equipment
+    equipment_quantity = models.PositiveIntegerField(   # integer field needed to store the quantity of an equipment
         default=0)  # the quantity if no number is entered by the user
 
     class Meta:
@@ -81,20 +81,54 @@ class Practical_Equipment_Needed(models.Model):
     def __str__(self):
         return self.practical.practical_name
 
+class Staff(models.Model):
+    staff_name = models.CharField(max_length=255)# something like a dropdown of the staff names from the database
 
+    class Meta:
+        db_table="Staff"
 
-# class Practical(models.Model):
-#     id = models.IntegerField(primary_key=True, null=False, blank=True)
-#     practical_name = models.CharField(max_length=255, blank=True, null=True, default='Unnamed Practical')
-#     equipment_needed = models.ManyToManyField(Inventory_Equipment, )    
+    def __str__(self):
+        return self.staff_name
 
-# Need to figure out auto increase id
-# Need to figure out image upload to db
-# Show table when changes made
-# remove equipment
+class Room(models.Model):
+    room_name = models.CharField(max_length=30)#something like a dropdown of all rooms from the database...
 
-# less modularizing the app - making it complicated - add all tables in here and link them properly - one by one though
-# first complete inventory
+    class Meta:
+        db_table="Room"
+
+    def __str__(self):
+        return self.room_name
+
+class Period(models.Model):
+    PERIOD_NUMBER_CHOICES = [
+            ('Lesson 1','Lesson 1'),
+            ('Lesson 2','Lesson 2'),
+            ('Lesson 3','Lesson 3'),
+            ('Lesson 4','Lesson 4'),
+            ('Lesson 5','Lesson 5'),
+        ]
+
+    period_number = models.CharField(
+                                    choices=PERIOD_NUMBER_CHOICES,
+                                    max_length = 10)
+
+    class Meta:
+        db_table = 'period_number'
+    
+
+class Lesson(models.Model):
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE, default= 1, null=True, blank=True)
+    period_time = models.ForeignKey(Period, on_delete=models.CASCADE)
+    date = models.DateField()
+    practical_booking = models.ForeignKey(Practical, on_delete=models.CASCADE)#or is it fk for Practical_Equipment_Needed
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)#location of lesson
+    number_students = models.PositiveIntegerField(default = 0)
+
+    class Meta:
+        db_table = 'Lesson_Bookings'
+
+    # def __str__(self):
+    #     return self.practical_booking
 
 # class Lessons(models.Model):
 #     pass
