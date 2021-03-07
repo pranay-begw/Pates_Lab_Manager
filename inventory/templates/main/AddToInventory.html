@@ -15,20 +15,16 @@
                 <form action="/AddInventory/" method="POST" autocomplete="off" enctype="multipart/form-data"> <!-- Add backend link to python file to connect all inputs to the backend, the ACTION contains the page url to GO TO one submitted correctly -->
                     {% csrf_token %}
                     <label for='Equipment Name'> Select Equipment</label>
-                    {{forms.existing_name}} <!-- CHECK IF THIS WORKS -->
+
                         <select id="equipment-name" name="existing_name" type="text" placeholder="Select Equipment">
                             <option value='Select' disabled="true" selected>Select</option>
                             {% for equipment_name in equipment_names %}
                                 <option value="{{ equipment_name.name }}">{{ equipment_name.name }}</option>
-                            {% endfor %}  
-                            <!-- <option value='Equipment 1'>Equipment 1</option>
-                            <option value='Equipment 2'>Equipment 2</option>
-                            <option value='Equipment 3'>Equipment 3</option>
-                            <option value='Equipment 4'>Equipment 4</option>
-                            <option value='Equipment 5'>Equipment 5</option> -->
+                            {% endfor %}
                         </select> <!-- Replace with sqlite link -->
 
-                    <p> No. of Additions {{ forms.new_quantity }}  <!-- Fix this in views.py/models.py-->
+                    <p> No. of Additions
+                         <!-- {{ forms.new_quantity }}  Fix this in views.py/models.py -->
                         <input class="text-box" id="qty-to-add" name="new_quantity" type="text" placeholder="Enter Added qty."> <!-- Change to drop down menu -->
                     </p>
 
@@ -38,16 +34,18 @@
                         <input class="text-box" name="id" type="text" placeholder="Enter ID">
                     </p> -->
 
-                    <p> New Equipment Name {{forms.name}}
+                    <p> New Equipment Name 
+                        <!-- {{forms.name}} -->
                         <input class="text-box" id="equipment-name" name="name" type="text" placeholder="Enter Name of New Equipment"> <!-- Change to drop down menu -->
                     </p>
 
-                    <p> No. of Additions {{forms.total_quantity}}
+                    <p> No. of Additions 
+                        <!-- {{forms.total_quantity}} -->
                         <input class="text-box" id="new-qty-to-add" name="total_quantity" type="text" placeholder="Enter qty."> <!-- Change to drop down menu -->
                     </p>
                     
                     <label for='Room Number'> Select Room/Lab</label>
-                        {{forms.location}}
+                        <!-- {{forms.location}} -->
                         <select id="room-number" name="location" type="text" placeholder="Select Room/Lab">
                             <option value='Select' disabled="true" selected>Select</option>
                             <option value='Room 1'>Room 1</option>
@@ -57,7 +55,8 @@
                             <option value='Room 5'>Room 5</option>
                     </select> <!-- Replace with sqlite link -->
 
-                    <p> Image Reference {{forms.img_reference}}
+                    <p> Image Reference 
+                        <!-- {{forms.img_reference}} -->
                         <input name="img_reference" type="file" placeholder="Enter Image for location">
                     </p>
 
