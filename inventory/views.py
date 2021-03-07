@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import Inventory_Equipment, Practical, Practical_Equipment_Needed, Room, Staff, Lesson, Period
 from .forms import Add_Inventory_Form, Remove_Inventory_Form, Add_Practical_Formset, New_Practical_Form, Select_Practical_Form, Book_Lesson_Form
 from django.forms import inlineformset_factory
+from django.contrib import messages
 # Create your views here.
 
 # homepage function needed to book a practical
@@ -47,8 +48,14 @@ def homepage(request):
 
             # Add checks to see if a booking already exists
             if (Lesson.objects.filter(date=booking_details['date'], period_time=booking_details['period_time'], room=booking_details['room']).exists()):
-                print ('A LESSON IN THIS ROOM FOR THIS TIME AND DATE EXISTS!!!')
+                messages.info(request, 'A LESSON IN THIS ROOM FOR THIS TIME AND DATE EXISTS!')
+            elif (Lesson.objects.filter(staff=booking_details['staff'], date=booking_details['date'], period_time=booking_details['period_time']).exists()):
+                 messages.info(request, 'Selected teacher will be busy')
             else:
+                # add clause such that it saves only if total calculated equipment is available.
+                equipment_names, equipment_quantities = calculate_total_equipment(booking_details)
+                message = create_message(equipment_names, equipment_quantities)
+
                 Lesson.objects.create(
                     staff=booking_details['staff'], 
                     period_time=booking_details['period_time'], 
@@ -61,6 +68,43 @@ def homepage(request):
     else:
         form = Book_Lesson_Form()
     return render(request, 'main/HomePage.html', {'form': form, 'practical_list':practical_list, 'room_list': room_list, 'period_numbers': period_numbers, 'staff_list': staff_list})
+
+def calculate_total_equipment(booking_details):
+    number_students = booking_details['number_students']
+    practical_to_book = booking_details['practical_booking']
+    practical_equipment = 0
+    equipment_names_list = []
+    equipment_quantities_list = []
+    practical_id = int(Practical.objects.filter(practical_name = practical_to_book).values('id')[0]['id']) # id of practical
+    equipments = Practical_Equipment_Needed.objects.filter(practical_id=practical_id).values('equipment_needed_id') #list of dictionaries that stores ID of each equipment
+    # need to retrive name of equipment and their quanities
+    for i in range (0, len(equipments)):
+
+        # creating lists which store the name and quanities of each equipment needed in a practical
+        equipment_name = Inventory_Equipment.objects.get(id = equipments[i]['equipment_needed_id']).name
+        equipment_names_list.append(equipment_name)
+
+        equipment_quantities = Practical_Equipment_Needed.objects.get(equipment_needed_id=equipments[i]['equipment_needed_id'], practical_id=practical_id).equipment_quantity
+        equipment_quantities_list.append(equipment_quantities)
+    
+    print (equipment_names_list)
+    print (equipment_quantities_list)
+
+    total_equipment_needed = [i * number_students for i in equipment_quantities_list]
+    print (total_equipment_needed)
+
+    return total_equipment_needed, equipment_names_list
+
+
+def create_message(equipment_names, equipment_quantities):
+    message_text = ''
+    for i in range (0, len(equipment_names)):
+        name_quantity_pair = ''
+        name_quantity_pair = str(equipment_names[i]) + ' ' + str(equipment_quantities[i]) + '\n'
+        message_text += name_quantity_pair
+
+    print (message_text)
+    return message_text
 
 #function to delete a certain quantity of the selected equipment_name
 def report_loss(request):
@@ -206,33 +250,4 @@ def edit_practical(request, id):
      # displaying formset with existing details of practical
     formset = Add_Practical_Formset(queryset = Practical_Equipment_Needed.objects.filter(practical__id = id))
     
-    return render(request, 'main/EditPractical.html', {'formset': formset, 'practical_names': practical_names})
-
-# def add_new_practical(request):
-#     if id:
-#         practical = Practical.objects.get(id=id)  # if this is an edit form, replace the author instance with the existing one
-#     else:
-#         practical = Practical()
-
-#     form = New_Practical_Form(instance=practical)
-#     formset = Add_Practical_Form(instance = practical)
-    
-#     if (request.method == "POST"):
-#         form = New_Practical_Form(request.POST)
-
-#         if id: 
-#             form = New_Practical_Form(request.POST, instance=practical)
-
-#         formset = Add_Practical_Form(request.POST)
-
-#         if form.is_valid():
-#             new_practical_obj = form.save(commit=False)
-#             formset = Add_Practical_Form(request.POST, instance=new_practical_obj)
-
-#             if formset.is_valid():
-#                 new_practical_obj.save()
-#                 formset.save()
-#                 return redirect('/AddPractical')
-
-#     return render(request, 'main/AddNewPractical.html', {'formset': formset, 'form': form})
-    
+    return render(request, 'main/EditPractical.html', {'formset': formset, 'practical_names': practical_names}) 
