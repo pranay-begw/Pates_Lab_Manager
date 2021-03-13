@@ -5,18 +5,17 @@
     <head>
         {% block title %}Name new Practical{% endblock %}
         {% block extrahead %}
+        <link rel="stylesheet" href="{% static 'css/NameNewPracticalDesign.css' %}">
         {% endblock %}
     </head>
-    <!-- /AddPractical/{{ practical.id }} -->
+
     <body>
         {% block content %}
             <div class = "FormForNaming">
-                <!-- something wrong with the id below-->
                 <form action="#" method="POST" autocomplete="on" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.as_p}}
-                    <button name="save" type="submit" class= "btn btn-success" id="Send-Request">Send Request</button>
-
+                    <button name="save" type="submit" class= "buttons" id="Send-Request">Send Request</button>
                 </form>
                 <p>testing</p>
             </div>

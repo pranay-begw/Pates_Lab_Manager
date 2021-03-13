@@ -29,8 +29,10 @@ class Remove_Inventory_Form(forms.ModelForm):   #name of the form to remove equi
         fields = "__all__"  # means that all attributes of the model named above will have a field
 
 class New_Practical_Form(forms.Form):
-    name_new_practical = forms.CharField(max_length=100)
-
+    name_new_practical = forms.CharField(
+        max_length=100, 
+        widget=forms.TextInput(attrs={'class' : 'text-box'}))
+    
 # form to input a single equipment and its quantity for a practical
 class New_Practical_Detail_Form(forms.ModelForm):   # declaring the form
     class Meta:
@@ -54,15 +56,3 @@ class Book_Lesson_Form(forms.Form):
     practical_booking = forms.ModelChoiceField(queryset=Practical.objects.all(), empty_label='Select') #or is it fk for Practical_Equipment_Needed
     room = forms.ModelChoiceField(queryset=Room.objects.all(), empty_label='Select') #location of lesson
     number_students = forms.IntegerField()
-
-# class Book_Lesson_Form(forms.ModelForm):
-#     class Meta:
-#         model = Lesson
-#         fields = "__all__"
-
-
-# Add_Practical_Formset = inlineformset_factory(  #creating the formset to input details of practical
-#     Practical,  # the parent model for the form
-#     Practical.equipment_needed.through, # 'through' reference/ link model for the form 
-#     fields=['equipment_needed','equipment_quantity'],   #the fields needed in  the form
-# )

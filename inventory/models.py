@@ -1,21 +1,5 @@
 from django.db import models
 
-# Room_Num = (
-#     ('Select', 'Select'),
-#     ('Room 1', 'Room 1'),
-#     ('Room 2', 'Room 2'),
-#     ('Room 3', 'Room 3'),
-#     ('Room 4', 'Room 4'),
-#     ('Room 5', 'Room 5'),
-# )
-
-#blank = True : Not Required
-#null = True : Stores some value as NULL if left empty
-
-# I HAVE MADE THEM ALL BLANK=TRUE -- AFTER ADDING WORKS TRY TO MAKE THEM BLANK CONDITIONALLY SUCH THAT IT IS ALLOWED ONLY IF SELECTING AN EQUIPMENT THAT EXISTS
-
-# the count of the field below must be equal to the count of columns in db table - therefore deleting quantity_ne
-
 
 # class to represent the INVENTORY table in the database
 class Inventory_Equipment(models.Model):
@@ -132,12 +116,3 @@ class Lesson(models.Model):
 
     # def __str__(self):
     #     return self.practical_booking
-
-# class Lessons(models.Model):
-#     pass
-
-# class Rooms(models.Model):
-#     pass
-
-# class Staff(models.Model):
-#     pass
