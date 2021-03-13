@@ -110,7 +110,7 @@ def email_message(message):
         send_mail(
             'Practical Request',
             message,
-            'pranaybeg@gmail.com',
+            '14pbegwani@patesgs.org',
             ['pranaybegwani@gmail.com'],
             fail_silently=False,
         )
