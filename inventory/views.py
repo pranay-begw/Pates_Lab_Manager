@@ -49,9 +49,9 @@ def homepage(request):
 
             # Add checks to see if a booking already exists
             if (Lesson.objects.filter(date=booking_details['date'], period_time=booking_details['period_time'], room=booking_details['room']).exists()):
-                messages.info(request, 'A LESSON IN THIS ROOM FOR THIS TIME AND DATE EXISTS!')
+                messages.info(request, 'A Lesson in this room for this time and date exists!')
             elif (Lesson.objects.filter(staff=booking_details['staff'], date=booking_details['date'], period_time=booking_details['period_time']).exists()):
-                 messages.info(request, 'Selected teacher will be busy')
+                 messages.info(request, 'Selected teacher will be busy during that time')
             else:
                 # add clause such that it saves only if total calculated equipment is available.
                 equipment_names, equipment_quantities = calculate_total_equipment(booking_details)
@@ -185,6 +185,13 @@ def update(request, id):
     else: #basically if method is GET
         form = Remove_Inventory_Form()  #empty form if GETTING the page from database 
     return render(request, 'main/EditInventoryDetails.html', {'inventory_obj': inventory_item })
+
+def delete_inventory_item(request, id):
+    equipment_delete = Inventory_Equipment.objects.get(id = id)
+    equipment_delete.delete()
+    return redirect('/ViewInventory')
+
+    return render(request,'main/DeleteEquipment.html', {})
 
 # function to create new empty practical
 def name_new_practical(request):

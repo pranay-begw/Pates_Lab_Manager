@@ -26,5 +26,8 @@ urlpatterns = [
      # new urls added to be able to edit the inventory equipment - based on their ID
      path("EditInventory/<int:id>", views.edit_inventory, name="edit_inventory"),
      path("Update/<int:id>", views.update, name="update"),
+
+     path("Delete/<int:id>", views.delete_inventory_item, name="delete_equipment"),
+
 ]
 #urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
