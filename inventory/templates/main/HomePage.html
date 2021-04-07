@@ -17,6 +17,33 @@
                         {% csrf_token %}
 
                         {{ form.as_p }}
+
+                        <button name="save" type="submit" class= "buttons" id="send-request">Send Request</button>
+
+                        {{ form.errors }}
+                    </form>
+
+                    {% if messages %}
+                        <ul class="messages">
+                        {% for message in messages %}
+                            <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    
+                    <p>testing</p>
+                </div>
+
+                <div id = "TheCalendar" unselectable="on"> <!-- Splitting the row above into columns, this one is for putting the calendar -->
+                    <iframe id="calendar" src="https://tinyurl.com/yxf3v8pm" height="700" width="750"></iframe>
+                </div>
+            </div>
+        {% endblock %}
+    </body>
+</html>
+
+
                         <!-- <label for='Practical Name'> Select Practical Name</label>
                         <br>
                         
@@ -76,28 +103,3 @@
                         <br>
                         
                         <input class="text-boxes" id="date-box" name="date" type="date" placeholder="Enter Date"> -->
-
-                        <button name="save" type="submit" class= "buttons" id="send-request">Send Request</button>
-
-                        {{ form.errors }}
-                    </form>
-
-                    {% if messages %}
-                        <ul class="messages">
-                        {% for message in messages %}
-                            <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
-                        {% endfor %}
-                        </ul>
-                    {% endif %}
-
-                    
-                    <p>testing</p>
-                </div>
-
-                <div id = "TheCalendar" unselectable="on"> <!-- Splitting the row above into columns, this one is for putting the calendar -->
-                    <iframe id="calendar" src="https://tinyurl.com/yxf3v8pm" height="700" width="750"></iframe>
-                </div>
-            </div>
-        {% endblock %}
-    </body>
-</html>
