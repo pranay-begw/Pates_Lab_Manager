@@ -50,10 +50,16 @@ Add_Practical_Formset = modelformset_factory(   #declaring the formset
 class Select_Practical_Form(forms.Form):
     name_practical = forms.CharField(max_length=255) 
 
+# Form to book a lesson in a particular room for some number of students
 class Book_Lesson_Form(forms.Form):
     staff = forms.ModelChoiceField(queryset=Staff.objects.all(), empty_label='Select')
+    # dropdown to select staff name
     period_time = forms.ModelChoiceField(queryset=Period.objects.all(), empty_label='Select')
-    date = forms.DateField()
-    practical_booking = forms.ModelChoiceField(queryset=Practical.objects.all(), empty_label='Select') #or is it fk for Practical_Equipment_Needed
-    room = forms.ModelChoiceField(queryset=Room.objects.all(), empty_label='Select') #location of lesson
+    # dropdown to select choice of lesson
+    date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
+    # date field that display a calendar allowing the user to select a specific date
+    practical_booking = forms.ModelChoiceField(queryset=Practical.objects.all(), empty_label='Select')
+    # dropdown to select what practical to boo for
+    room = forms.ModelChoiceField(queryset=Room.objects.all(), empty_label='Select')
+    # dropdown to select room number to book
     number_students = forms.IntegerField()

@@ -139,5 +139,5 @@ MEDIA_URL = '/media/'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp-mail.outlook.com'
 EMAIL_HOST_USER = '14pbegwani@patesgs.org'
-EMAIL_HOST_PASSWORD = 'Narpat123()!'
+EMAIL_HOST_PASSWORD = 'Pranaenae123()!'
 EMAIL_PORT = 25

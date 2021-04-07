@@ -65,6 +65,7 @@ class Practical_Equipment_Needed(models.Model):
     def __str__(self):
         return self.practical.practical_name
 
+# Model for table with names of all staff members
 class Staff(models.Model):
     staff_name = models.CharField(max_length=255)# something like a dropdown of the staff names from the database
 
@@ -74,6 +75,7 @@ class Staff(models.Model):
     def __str__(self):
         return self.staff_name
 
+# Model for the table of all the rooms in the school science dept.
 class Room(models.Model):
     room_name = models.CharField(max_length=30)#something like a dropdown of all rooms from the database...
 
@@ -83,6 +85,7 @@ class Room(models.Model):
     def __str__(self):
         return self.room_name
 
+# Model for the lesson time (1 - 5)
 class Period(models.Model):
     PERIOD_NUMBER_CHOICES = [
             ('Lesson 1','Lesson 1'),
@@ -92,6 +95,7 @@ class Period(models.Model):
             ('Lesson 5','Lesson 5'),
         ]
 
+# choice field because I need this to be a dropdown which holds the above 5 ooptions - it is a constant
     period_number = models.CharField(
                                     choices=PERIOD_NUMBER_CHOICES,
                                     max_length = 10)
@@ -102,14 +106,20 @@ class Period(models.Model):
     def __str__(self):
         return self.period_number
     
-
+# Model which stores the booking details if a booking is made
 class Lesson(models.Model):
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE, default= 1, null=True, blank=True)
+    # name of staff who is booking a lesson - foreign key of the staff model
     period_time = models.ForeignKey(Period, on_delete=models.CASCADE)
+    # period number of the booking - foreign key of the Period model
     date = models.DateField()
-    practical_booking = models.ForeignKey(Practical, on_delete=models.CASCADE)#or is it fk for Practical_Equipment_Needed
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)#location of lesson
+    # date of the booking - needed to check for clashes in bookings
+    practical_booking = models.ForeignKey(Practical, on_delete=models.CASCADE)
+    # Foreign Key for Practical model - needed to store the name of the practical that the user wants to book
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    # room number that the member of staff wants to book - foreign key of the Room model
     number_students = models.PositiveIntegerField(default = 0)
+    # number of students that will be doing the practical
 
     class Meta:
         db_table = 'Lesson_Bookings'
