@@ -16,7 +16,16 @@
                     {% csrf_token %}
                     {{ form.as_p}}
                     <button name="save" type="submit" class= "buttons" id="Send-Request">Send Request</button>
+                    {{ form.errors }}
                 </form>
+
+                {% if messages %}
+                        <ul class="messages">
+                        {% for message in messages %}
+                            <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
                 <p>testing</p>
             </div>
         {% endblock %}

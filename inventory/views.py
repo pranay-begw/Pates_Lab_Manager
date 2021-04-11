@@ -5,6 +5,7 @@ from .forms import Add_Inventory_Form, Remove_Inventory_Form, Add_Practical_Form
 from django.forms import inlineformset_factory
 from django.contrib import messages
 from django.core.mail import send_mail
+import time
 # Create your views here.
 
 # homepage function needed to book a practical
@@ -27,8 +28,11 @@ def homepage(request):
                 'number_students': '',}
 
             staff_name = form.cleaned_data.get('staff')
+            #   get the data from form
             staff_obj = Staff.objects.filter(staff_name=staff_name)[0]
+            #   get the object of that data from the respective table
             booking_details['staff'] = staff_obj
+            #   add the object from above to the dictionary
 
             period_number = form.cleaned_data.get('period_time')
             period_obj = Period.objects.filter(period_number= period_number)[0]
@@ -51,11 +55,11 @@ def homepage(request):
             if (Lesson.objects.filter(date=booking_details['date'], period_time=booking_details['period_time'], room=booking_details['room']).exists()):
                 messages.info(request, 'A Lesson in this room for this time and date exists!')
             elif (Lesson.objects.filter(staff=booking_details['staff'], date=booking_details['date'], period_time=booking_details['period_time']).exists()):
-                 messages.info(request, 'Selected teacher will be busy during that time')
+                messages.info(request, 'Selected teacher will be busy during that time')
             else:
                 # add clause such that it saves only if total calculated equipment is available.
                 equipment_names, equipment_quantities = calculate_total_equipment(booking_details)
-                message = create_message(equipment_names, equipment_quantities)
+                message = create_message(equipment_names, equipment_quantities, booking_details['room'])
                 email_message(message)
                 Lesson.objects.create(
                     staff=booking_details['staff'], 
@@ -70,15 +74,18 @@ def homepage(request):
         form = Book_Lesson_Form()
     return render(request, 'main/HomePage.html', {'form': form, 'practical_list':practical_list, 'room_list': room_list, 'period_numbers': period_numbers, 'staff_list': staff_list})
 
+# function to calculate the total equipment needed to perform the practical 
 def calculate_total_equipment(booking_details):
-    number_students = booking_details['number_students']
-    practical_to_book = booking_details['practical_booking']
+    number_students = booking_details['number_students']    #var to store number of students
+    practical_to_book = booking_details['practical_booking']    #var to store the practical to be done
     practical_equipment = 0
-    equipment_names_list = []
-    equipment_quantities_list = []
-    practical_id = int(Practical.objects.filter(practical_name = practical_to_book).values('id')[0]['id']) # id of practical
-    equipments = Practical_Equipment_Needed.objects.filter(practical_id=practical_id).values('equipment_needed_id') #list of dictionaries that stores ID of each equipment
-    # need to retrive name of equipment and their quanities
+    equipment_names_list = []   #list to store names of all equipment in the practical that user wants to do
+    equipment_quantities_list = []  #list to store quantities of all the equipment in the above list
+    practical_id = int(Practical.objects.filter(practical_name = practical_to_book).values('id')[0]['id']) #id of practical
+    equipments = Practical_Equipment_Needed.objects.filter(practical_id=practical_id).values('equipment_needed_id') 
+    #list of dictionaries that stores ID of each equipment
+
+    # for loop needed to retrive name of equipment and their quanities
     for i in range (0, len(equipments)):
 
         # creating lists which store the name and quanities of each equipment needed in a practical
@@ -88,23 +95,36 @@ def calculate_total_equipment(booking_details):
         equipment_quantities = Practical_Equipment_Needed.objects.get(equipment_needed_id=equipments[i]['equipment_needed_id'], practical_id=practical_id).equipment_quantity
         equipment_quantities_list.append(equipment_quantities)
     
-    print (equipment_names_list)
-    print (equipment_quantities_list)
+    print (equipment_names_list)        #check print
+    print (equipment_quantities_list)   #check print
 
-    total_equipment_needed = [i * number_students for i in equipment_quantities_list]
-    print (total_equipment_needed)
+    total_equipment_needed = [i * number_students for i in equipment_quantities_list]   #list to store the total quantity of each equipment
+    print (total_equipment_needed)      #check print
 
     return total_equipment_needed, equipment_names_list
 
-def create_message(equipment_names, equipment_quantities):
-    message_text = ''
-    for i in range (0, len(equipment_names)):
+# Function to create a message that needs to go to the technician 
+def create_message(equipment_names, equipment_quantities, room_number):
+    message_text = 'Room Number '+ str(room_number)+'\n'    #initial string with string of the message
+    for i in range (0, len(equipment_names)):   # cycling through the equipmetn lists to add them to the message
         name_quantity_pair = ''
         name_quantity_pair = str(equipment_names[i]) + ' ' + str(equipment_quantities[i]) + '\n'
         message_text += name_quantity_pair
 
     print (message_text)
     return message_text
+
+    '''
+        The message looks something like this:
+
+        Room Number B101
+        10  Testtubes
+        15  Rulers
+        20  Clamps
+        30  Bosses
+
+        ##  I still need to add the time and date of the lesson in this message!
+    '''
 
 def email_message(message):
         send_mail(
@@ -200,9 +220,14 @@ def name_new_practical(request):
     if (request.method == 'POST'):  #if connection method is POST
         form = New_Practical_Form(request.POST) #creates new form to send data to server
         if form.is_valid():
-            new_name = form.cleaned_data.get('name_new_practical')  #gets name of the new practical in the variable   
-        new_practical = Practical.objects.create(practical_name = new_name)    # creates new practicalin the database
-        new_id = Practical.objects.filter(practical_name= new_name).values('id')[0]['id']   #gets id of the newly added practical
+            new_name = form.cleaned_data.get('name_new_practical')  #gets name of the new practical in the variable
+            if (Practical.objects.filter(practical_name = new_name)).count() != 0:
+                messages.error(request, 'This Practical Exists')    
+                return redirect('/NameNewPractical')
+                print ('Exists')
+            else:
+                new_practical = Practical.objects.create(practical_name = new_name)    # creates new practicalin the database
+                new_id = Practical.objects.filter(practical_name= new_name).values('id')[0]['id']   #gets id of the newly added practical
 
         print (str(new_id))
         practical = Practical.objects.get(pk = new_id)  # querys the new practical using its ID to pass to template 
@@ -216,9 +241,6 @@ def add_new_practical(request, id): # ID of the newly added practical is a param
 
     if (Practical_Equipment_Needed.objects.filter(practical_id = id).count()) == 0: # checks if the practical already exists in the database
         new_practical_details = Practical_Equipment_Needed()    # if it doesn't exist, creates empty object for details
-    else:
-        print ('Exists')    # prints exists if practical already exists
-        # redirect to edit practical page
 
     if (request.method == 'POST'):  # if method is POST
         formset = Add_Practical_Formset(request.POST)   # creates new empty formset to add details for the selected practical
