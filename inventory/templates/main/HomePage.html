@@ -17,10 +17,12 @@
                         {% csrf_token %}
 
                         {{ form.as_p }}
+                        <!-- Renders the form which takes the booking-->
 
                         <button name="save" type="submit" class= "buttons" id="send-request">Send Request</button>
 
                         {{ form.errors }}
+                        <!-- Used to display all the error messages in the form like clashes in bookings, etc.-->
                     </form>
 
                     {% if messages %}
@@ -31,7 +33,6 @@
                         </ul>
                     {% endif %}
 
-                    
                     <p>testing</p>
                 </div>
 
