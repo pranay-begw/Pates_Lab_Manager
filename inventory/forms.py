@@ -66,7 +66,8 @@ class New_Practical_Detail_Form(forms.ModelForm):   # declaring the form
 # formset which creates multiple instances of the form above
 Add_Practical_Formset = modelformset_factory(   #declaring the formset
     Practical_Equipment_Needed,                 #the models that this formset is connected to
-    New_Practical_Detail_Form                   #the form (above) whose copies this formset creates
+    New_Practical_Detail_Form,                  #the form (above) whose copies this formset creates
+    can_delete=True                 
 )
 
 #Form to select the practical that the user wants to edit
@@ -75,14 +76,29 @@ class Select_Practical_Form(forms.Form):
 
 # Form to book a lesson in a particular room for some number of students
 class Book_Lesson_Form(forms.Form):
-    staff = forms.ModelChoiceField(queryset=Staff.objects.all(), empty_label='Select', widget=forms.Select(attrs={'class' : 'small-drop-downs'}))
+    staff = forms.ModelChoiceField(
+        queryset=Staff.objects.all(), 
+        empty_label='Select', 
+        widget=forms.Select(attrs={'class' : 'small-drop-downs'}))
     # dropdown to select staff name
-    period_time = forms.ModelChoiceField(queryset=Period.objects.all(), empty_label='Select', widget=forms.Select(attrs={'class' : 'small-drop-downs'}))
+    period_time = forms.ModelChoiceField(
+        queryset=Period.objects.all(), 
+        empty_label='Select', 
+        widget=forms.Select(attrs={'class' : 'small-drop-downs'}))
     # dropdown to select choice of lesson
-    date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date', 'id': 'date-widget'}))
+    date = forms.DateField(widget=forms.widgets.DateInput(
+        attrs={'type': 'date', 'id': 'date-widget'}))
     # date field that display a calendar allowing the user to select a specific date
-    practical_booking = forms.ModelChoiceField(queryset=Practical.objects.all(), empty_label='Select', widget=forms.Select(attrs={'id' : 'practical-list'}))
+    practical_booking = forms.ModelChoiceField(
+        queryset=Practical.objects.all(), 
+        empty_label='Select', 
+        widget=forms.Select(attrs={'id' : 'practical-list'}))
     # dropdown to select what practical to boo for
-    room = forms.ModelChoiceField(queryset=Room.objects.all(), empty_label='Select', widget=forms.Select(attrs={'class' : 'small-drop-downs'}))
+    room = forms.ModelChoiceField(
+        queryset=Room.objects.all(), 
+        empty_label='Select', 
+        widget=forms.Select(attrs={'class' : 'small-drop-downs'}))
     # dropdown to select room number to book
-    number_students = forms.IntegerField(widget=forms.TextInput(attrs={'class' : 'text-boxes'}))
+    number_students = forms.IntegerField(
+        widget=forms.TextInput(attrs={'class' : 'text-boxes'}))
+    # integer field to enter the number of students in the lesson being booked

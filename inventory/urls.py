@@ -29,5 +29,7 @@ urlpatterns = [
 
      path("Delete/<int:id>", views.delete_inventory_item, name="delete_equipment"),
 
+     path("BookingHistory/", views.booking_history, name="booking_history"),
+     
 ]
 #urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

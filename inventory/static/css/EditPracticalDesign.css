@@ -1,0 +1,47 @@
+.FormForEditing{
+    padding-top: 20px;
+    text-align: center;
+    margin: auto;
+    font-family: Arial;
+}
+
+#practical-name{
+    width: 200px;
+    border-radius: 12px;
+    background-color: transparent;
+    height: 30px;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;   
+}
+
+#quantity-needed{
+    width: 50px;
+    border-radius: 12px;
+    height: 23px;
+    border: 1px solid black;
+}
+
+#equipment-name{
+    width: 200px;
+    border-radius: 12px;
+    background-color: transparent;
+    height: 25px;
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+}
+
+#Send-Request{
+    border-radius: 12px;
+    width: 70px;
+    height: 35px;
+    font-size: 9px;
+    text-align: center;
+}
+
+#Send-Request:hover{
+    color: red;
+    border-radius: 12px;
+    cursor: pointer;
+}

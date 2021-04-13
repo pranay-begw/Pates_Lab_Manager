@@ -59,6 +59,15 @@ def homepage(request):
             else:
                 # add clause such that it saves only if total calculated equipment is available.
                 equipment_names, equipment_quantities = calculate_total_equipment(booking_details)
+
+                # practical_id = int(Practical.objects.filter(practical_name = practical_to_book).values('id')[0]['id'])
+                # inventory_equipment_id = Practical_Equipment_Needed.objects.filter(practical_id=practical_id).values('equipment_needed_id')
+                # for i in range (0, len(equipment_quantities)):
+                #     if equipment_quantities[i]>inventory_equipment_id[i]:
+                #         messages.info(request, 'Inufficient Equipment in the inventory')
+                #     else:
+                #         break
+
                 message = create_message(equipment_names, equipment_quantities, booking_details['room'])
                 email_message(message)
                 Lesson.objects.create(
@@ -68,8 +77,7 @@ def homepage(request):
                     practical_booking=booking_details['practical_booking'], 
                     room=booking_details['room'], 
                     number_students=booking_details['number_students'])
-    
-            #FORM WORKS NEED TO SORT OUT TEMPLATE
+
     else:
         form = Book_Lesson_Form()
     return render(request, 'main/HomePage.html', {'form': form, 'practical_list':practical_list, 'room_list': room_list, 'period_numbers': period_numbers, 'staff_list': staff_list})
@@ -175,7 +183,6 @@ def add_new_to_inventory(request):
             else:
                 form.save() # if the qty to add is blank, saves the botton part of the form, creating a new record in database
             return redirect('/ViewInventory')   #displays the new record in a table - this was added later
-            # link to a page which shows the full table inventory
     else: #basically if method is GET
         form = Add_Inventory_Form()
     # below line contains the context being sent to the template AddToInventory.html
@@ -206,10 +213,11 @@ def update(request, id):
         form = Remove_Inventory_Form()  #empty form if GETTING the page from database 
     return render(request, 'main/EditInventoryDetails.html', {'inventory_obj': inventory_item })
 
+# function to delete exisiing inventory item from the table
 def delete_inventory_item(request, id):
-    equipment_delete = Inventory_Equipment.objects.get(id = id)
-    equipment_delete.delete()
-    return redirect('/ViewInventory')
+    equipment_delete = Inventory_Equipment.objects.get(id = id) # stores the quereyset of the item that needs to be deleted
+    equipment_delete.delete()   # deletes the item
+    return redirect('/ViewInventory')   #redirects to the inventory page
 
     return render(request,'main/DeleteEquipment.html', {})
 
@@ -283,9 +291,16 @@ def edit_practical(request, id):
             for instance in instances:  # cycle through all instances and save them individually to database
                 instance.practical_id = id  # making sure instance is saved for the practical with th correct id
                 instance.save()
+            for object in formset.deleted_objects:
+                object.delete()
         return redirect('/EditPractical/%d'%id) # leads to the same page to allow user to add/edit more details
 
      # displaying formset with existing details of practical
     formset = Add_Practical_Formset(queryset = Practical_Equipment_Needed.objects.filter(practical__id = id))
     
     return render(request, 'main/EditPractical.html', {'formset': formset, 'practical_names': practical_names}) 
+
+# function to get all the bookings made
+def booking_history(response):
+    lesson_obj = Lesson.objects.all()   #querys every single record into this identifier
+    return render(response,"main/BookingHistory.html", {'lesson_obj': lesson_obj}) #template rendered & lesson_obj passed as context to template
