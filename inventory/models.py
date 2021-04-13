@@ -123,6 +123,3 @@ class Lesson(models.Model):
 
     class Meta:
         db_table = 'Lesson_Bookings'
-
-    # def __str__(self):
-    #     return self.practical_booking

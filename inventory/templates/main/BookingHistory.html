@@ -1,0 +1,44 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+<html>
+    <head>
+        {% block title %}Booking History{% endblock %}
+        {% block extrahead %}
+        <link rel="stylesheet" href="{% static 'css/ViewInventoryDesign.css' %}">
+        {% endblock %}
+        <!-- Add link to its own css -->
+    </head>
+
+    <body>
+        {% block content %}
+            <table>
+                <thead>
+                    <tr>
+                        <th class="tabled-headers">Lesson ID</th>  
+                        <th class="tabled-headers">Date</th>  
+                        <th class="tabled-headers">Staff Name</th>
+                        <th class="tabled-headers">Room Number</th>
+                        <th class="tabled-headers">Practical</th> 
+                        <th class="tabled-headers">Number Students</th>  
+                    </tr>
+                </thead>
+        
+                <tbody>
+                    <!-- inventory_obj is the context passed from the template to refer to the table -->
+                    <!-- the lines below loops through the records of the table displaying needed information -->
+                    {% for lesson in lesson_obj %}
+                        <tr>
+                            <td class="table-blocks">{{ lesson.id }}</td>  
+                            <td class="table-blocks">{{ lesson.date }}</td>  
+                            <td class="table-blocks">{{ lesson.staff }}</td> 
+                            <td class="table-blocks">{{ lesson.room }}</td>
+                            <td class="table-blocks">{{ lesson.practical_booking }}</td>
+                            <td class="table-blocks">{{ lesson.number_students }}</td>
+                        </tr>
+                    {% endfor%}
+                </tbody>
+            </table>
+        {% endblock %}
+    </body>
+</html>
