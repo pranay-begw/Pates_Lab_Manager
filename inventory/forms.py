@@ -5,6 +5,16 @@ from .models import Inventory_Equipment, Practical, Practical_Equipment_Needed, 
 from django.forms import modelformset_factory
 # importing library to use input validation in django
 from django.core import validators
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
+
+class CreateUserForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2', ]
+
+##########################################################################################
 
 class Add_Inventory_Form(forms.ModelForm):
     new_quantity = forms.IntegerField(  #field to enter the qty needed to be added to existing equipment

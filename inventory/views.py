@@ -1,12 +1,60 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Inventory_Equipment, Practical, Practical_Equipment_Needed, Room, Staff, Lesson, Period
-from .forms import Add_Inventory_Form, Remove_Inventory_Form, Add_Practical_Formset, New_Practical_Form, Select_Practical_Form, Book_Lesson_Form
+from .forms import Add_Inventory_Form, Remove_Inventory_Form, Add_Practical_Formset, New_Practical_Form, Select_Practical_Form, Book_Lesson_Form, CreateUserForm
 from django.forms import inlineformset_factory
 from django.contrib import messages
 from django.core.mail import send_mail
 import time
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+
 # Create your views here.
+
+def register(request):
+    if request.user.is_authenticated:
+        return redirect('/')
+    else:        
+        form = CreateUserForm()
+
+        if request.method == 'POST':
+            form = CreateUserForm(request.POST)
+            if (form.is_valid()):
+                form.save()
+                username = form.cleaned_data.get('username')
+                messages.success(request, 'User Created Successfully for ' + username)
+
+                return redirect('login')
+    return render(request, 'registration/register.html', {'form': form})
+
+def loginPage(request):
+    if request.user.is_authenticated:
+        return redirect('/')
+    else:
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(request, username=username, password=password)
+            
+            if user is not None:
+                login(request, user)
+                return redirect('/')
+            else:
+                messages.info(request, 'username or password is incorrect')
+
+    return render(request, 'registration/login.html', {})
+
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
+
+
+
+###########################################################################################################################
+
+
 
 # homepage function needed to book a practical
 def homepage(request):
@@ -164,6 +212,8 @@ def report_loss(request):
 
 def add_new_to_inventory(request):
     equipment_name = Inventory_Equipment.objects.all() #gets all the equipment stored in the inventory table of the db
+    room_list = Room.objects.all()
+
     if request.method == "POST": # checks if data is being SENT/POSTED to the template
 
         form = Add_Inventory_Form(request.POST, request.FILES) #holds all the information from our form. 
@@ -186,7 +236,7 @@ def add_new_to_inventory(request):
     else: #basically if method is GET
         form = Add_Inventory_Form()
     # below line contains the context being sent to the template AddToInventory.html
-    return render(request, 'main/AddToInventory.html', {'form': form, 'equipment_names': equipment_name})
+    return render(request, 'main/AddToInventory.html', {'form': form, 'equipment_names': equipment_name, 'room_list' : room_list})
 
 # function to get all records from the inventory table and store them in a context dictionary
 def view_inventory(response):

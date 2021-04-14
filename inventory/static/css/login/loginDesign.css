@@ -1,0 +1,129 @@
+.mainWindow{
+    border-style: solid;
+    border-color: red;
+    border-radius: 10px;
+    border-top-width: auto;
+    border-bottom-width: auto;
+    border-left-width: 10px;
+    border-right-width: 10px;
+    width: 98%;
+    height: 98%;
+}
+
+#TopBar{
+    background-color: red;
+    overflow: auto;
+}
+
+.buttons{
+    color: black;
+    border-style: solid;
+    border-color: grey;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+    width: 100px;
+    height: 50px;
+    padding: 5px;
+    text-align: center;
+}
+
+.buttons:hover{
+    color: red;
+    border-radius: 12px;
+}
+
+#BarRight{
+    display: flex;
+    float: right;
+}
+
+#BarLeft{
+    display: flex;
+    float: left;
+}
+
+.OrderEquipPage:after {
+    display: flex;
+    content: "";
+    flex-direction: row;
+    clear: both;
+}
+
+.FormForLogin{
+    padding: 1%;
+    margin: auto;
+    margin-right: auto;
+    margin-left: 1%;
+    display: inline-block;
+    align-self: center;
+    vertical-align: middle;
+    font-family: arial;
+}
+
+#practical-list{
+    width: 150px;
+    border-radius: 12px;
+    background-color: transparent;
+    height: 30px;
+    border-color: black;
+    border-style: solid;
+    text-align: center;
+}
+
+.text-boxes{
+    width: 170px;
+    border-radius: 12px;
+    background-color: transparent;
+    height: 25px;
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+    text-align: center;
+}
+
+.small-drop-downs{
+    width: 170px;
+    border-radius: 12px;
+    background-color: transparent;
+    height: 30px;
+    border-color: black;
+    border-style: solid;
+    text-align: center;
+}
+
+#TheCalendar{
+    padding: 3%;
+    margin: auto;
+    display: inline-block;
+    align-self: middle;
+    vertical-align: middle;
+}
+
+#calendar{
+    border-radius: 12px;
+    border-color: grey;
+    width: 60vw;
+    height: 100vh;
+    position: relative;
+}
+
+#send-request{
+    border-radius: 12px;
+    width: 70px;
+    height: 35px;
+    font-size: 9px;
+    text-align: center;
+    margin-left: 30%;
+}
+
+#date-widget{
+    width: 170px;
+    border-radius: 12px;
+    background-color: transparent;
+    height: 25px;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+}
