@@ -1,0 +1,123 @@
+{% load static %}
+
+<html>
+    <head>
+        <title>Login</title>
+        <style>
+            .mainWindow{
+                border-style: solid;
+                border-color: red;
+                border-radius: 10px;
+                border-top-width: auto;
+                border-bottom-width: auto;
+                border-left-width: 10px;
+                border-right-width: 10px;
+                width: 98%;
+                height: 98%;
+            }
+
+            .buttons{
+                color: black;
+                border-style: solid;
+                border-color: grey;
+                border-radius: 12px;
+                font-size: 16px;
+                cursor: pointer;
+                margin: 5px;
+                width: 100px;
+                height: 50px;
+                padding: 5px;
+                text-align: center;
+            }
+
+            .buttons:hover{
+                color: red;
+                border-radius: 12px;
+            }
+            
+            #login{
+                margin-top: 5%;
+                margin-bottom: 5%;
+                margin-left: 30%;
+            }
+
+            .FormForLogin{
+                border-style: solid;
+                border-color: red;
+                border-radius: 10px;
+                border-top-width: 10px;
+                border-bottom-width: 10px;
+                border-left-width: 10px;
+                border-right-width: 10px;
+                padding: 5%;
+                margin: auto;
+                display: inline-block;
+                position: absolute;
+                font-family: arial;
+            }
+
+            .text-boxes{
+                width: 170px;
+                border-radius: 12px;
+                background-color: transparent;
+                height: 25px;
+                border-width: 1px;
+                border-color: black;
+                border-style: solid;
+                text-align: center;
+            }
+
+            #send-request{
+                border-radius: 12px;
+                width: 70px;
+                height: 35px;
+                font-size: 9px;
+                text-align: center;
+                margin-left: 30%;
+            }
+
+        </style>
+    </head>
+
+    <body>
+    <div class='page' id='login'>
+		<form class="FormForLogin" method="POST" action="">
+            <h3 id="form-title">LOGIN ACCOUNT</h3>
+            {% csrf_token %}
+            <label>Enter Username</label>
+            <input class='text-boxes' type="text" name="username"/>
+            
+            <br>
+            <br>
+            <label>Enter Password</label>
+            <input class='text-boxes' type="text" name="password"/>
+            
+            <br>
+            <br>
+
+            <button class="buttons" id="send-request" type="submit">Login</button>
+            
+            {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+        <br>
+        <br>
+        Don't have an account? <a href="{% url 'register' %}">Sign Up</a>
+        </form>
+    </div>
+
+
+	<script>
+
+		//Query All input fields
+		var form_fields = document.getElementsByTagName('input')
+		form_fields[1].placeholder='Username...';
+		form_fields[2].placeholder='Enter password...';
+
+
+		for (var field in form_fields){	
+			form_fields[field].className += ' form-control'
+		}
+	</script>
+</body>
+</html>

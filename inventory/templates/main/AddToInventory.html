@@ -41,15 +41,16 @@
                     </p>
                     
                     <label for='Room Number'> Select Room/Lab</label>
-                        <!-- {{forms.location}} -->
-                        <select id="room-number" name="location" type="text" placeholder="Select Room/Lab">
-                            <option value='Select' disabled="true" selected>Select</option>
-                            <option value='Room 1'>Room 1</option>
-                            <option value='Room 2'>Room 2</option>
-                            <option value='Room 3'>Room 3</option>
-                            <option value='Room 4'>Room 4</option>
-                            <option value='Room 5'>Room 5</option>
-                    </select> <!-- Replace with sqlite link -->
+
+                    <select id="room-number" name="location" type="text" placeholder="Select Room/Lab">
+                        <!-- Default heading/option that is disabled to guide the user -->
+                        <option value='Select' disabled="true" selected>Select</option>
+                        <!-- For loop to display each individual equipment as a selectable list option in the drop-down -->
+                        {% for room in room_list %}
+                            <option value="{{ room.room_name }}">{{ room.room_name }}</option>
+                        {% endfor %}
+                    </select>
+
 
                     <p> Image Reference 
                         <!-- {{forms.img_reference}} -->
